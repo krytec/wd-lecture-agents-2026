@@ -1,132 +1,85 @@
-# 05 Spec-driven Development
+# 05 Spec-Driven Development (SDD)
 
 ## One-liner
 
-Spec-driven Development dreht die Richtung um: Nicht Code ist die erste Wahrheit, sondern Absicht, Verhalten und Akzeptanzkriterien.
+Spec-Driven Development (SDD) dreht die Arbeitsrichtung mit AI Agents um: **Nicht der Code ist die erste Wahrheit, sondern eine prüfbare Spec im Repo.**
 
-## Warum das wichtig ist
+## Warum SDD mit Coding Agents der größte Hebel ist
 
-Agenten sind schnell genug, um falsche Annahmen sofort in Code zu verwandeln.
+Agenten sind schnell genug, um vage Ideen in Sekunden in 400 Zeilen Code zu verwandeln („Vibe Coding“).
+Das Problem: **400 Zeilen generierten Code zu reviewen dauert 30 Minuten — eine 25-zeilige Spec zu reviewen dauert 45 Sekunden.**
 
-Ohne Spec passiert oft:
-
-```text
-Idee -> Agent schreibt Code -> Mensch entdeckt Missverständnis -> Patch auf Patch
-```
-
-Mit Spec:
+Ohne SDD passiert fast immer:
 
 ```text
-Idee -> Spec -> Plan -> Tasks -> Implementierung -> Review gegen Spec
+Vage Idee -> Agent generiert viel Code -> Mensch entdeckt Missverständnis -> Patch auf Patch (Drift)
 ```
 
-Das ist nicht mehr Papierkram. Es ist Drift-Kontrolle.
-
-## Was eine gute Mini-Spec enthält
-
-- Problem
-- Nutzer oder Stakeholder
-- aktuelles Verhalten
-- gewünschtes Verhalten
-- Non-goals
-- Akzeptanzkriterien
-- Edge Cases
-- Verifikationsbefehle
-
-Im Workshop gibt es zwei Varianten:
-
-- **Greenfield**: Die Spec erzeugt erst die Produktform. Beispiel: ein neues Puzzle-Spiel braucht PRD, Mechanics Spec, Testvertrag und erste Slice.
-- **Brownfield**: Die Spec begrenzt eine Änderung in vorhandener Form. Beispiel: der Flock-Timer-Bug braucht Failure, Scope, Non-goals und Verifikationsbefehl.
-
-## Spec Kit als Ökosystemsignal
-
-GitHub Spec Kit macht diesen Ablauf agententauglich und spricht explizit mehrere Coding Agents an. Wichtig ist nicht, dass jeder Spec Kit installieren muss. Wichtig ist das Prozessmuster:
+Mit SDD arbeitet das Team in einer klaren Kette:
 
 ```text
-specify -> plan -> tasks -> implement
+Explore -> Specify (Datei im Repo) -> Plan Lock -> Execute -> Verify gegen Spec
 ```
 
-## Manuell vs Workflow-Werkzeug
+Das ist kein bürokratischer Papierkram, sondern **Drift-Kontrolle** und die gemeinsame Sprache zwischen **Engineering, QA, DevOps und Produkt/PM**.
 
-Die Prompts in diesem Modul sind absichtlich manuell. Das ist der kleinste gemeinsame Nenner: Jede Person kann den Agenten explizit durch Spec, Plan, Task, Implementierung und Review führen.
+## Warum die Spec als Datei ins Repo gehört (nicht nur in den Chat)
 
-In der Praxis kann man daraus natürlich eine eigene `spec-driven-development` Skill oder ein Plugin bauen. Für den Workshop ist aber spannender, zwei aktuelle Industrie-Beispiele zu zeigen:
+Ein häufiger Anfängerfehler ist, Specs nur im Chat-Verlauf zu diskutieren. In echtem SDD lebt die Spec als Markdown-Datei im Projekt (z.B. `playground/incident-triage-hub/specs/001-my-change.md`):
 
-- **Superpowers**: ein Skill-/Plugin-Bündel, das den Agenten in eine stärkere Methodik zwingt: Design vor Code, Plan vor Ausführung, TDD, Reviews und Abschlussgates.
-- **OpenSpec**: ein leichtgewichtiges Spec-Framework, das Changes, Proposal, Spec-Deltas, Design und Tasks als repo-lokale Artefakte führt.
+1. **Kein Gedächtnisverlust:** Chat-Kontexte laufen voll oder werden komprimiert — eine Datei im Repo bleibt präzise und jederzeit nachlesbar.
+2. **Handoff an Subagents & Teamkollegen:** Ein zweiter Agent (z.B. Reviewer oder Tester) oder eine Kollegin kann die Spec-Datei direkt lesen, ohne deinen Chat-Verlauf zu kennen.
+3. **Gemeinsame Arbeitsfläche für alle Rollen:**
+   - **PM / Produkt / Ops** schärft *Problem, Desired Behavior & Non-Goals*.
+   - **QA** prüft und ergänzt *Acceptance Criteria & Edge Cases*.
+   - **Engineering / DevOps** prüft den *3-Schritte-Plan & Verification Command* und lässt den Agenten die Änderung umsetzen.
 
-Didaktische Linie:
+## Was eine gute SDD-Spec enthält
+
+Siehe unsere Vorlage [playground/incident-triage-hub/specs/_TEMPLATE.md](../../playground/incident-triage-hub/specs/_TEMPLATE.md) und das ausgefüllte Beispiel [EXAMPLE-near-breach-warning.md](../../playground/incident-triage-hub/specs/EXAMPLE-near-breach-warning.md):
+
+1. **Problem & Current Behavior:** Was passiert aktuell im Code?
+2. **Desired Behavior:** Welches beobachtbare Verhalten wollen wir stattdessen?
+3. **Explicit Non-Goals:** Was lassen wir bewusst weg? (Der wichtigste Schutz gegen Scope Creep!)
+4. **Acceptance Criteria & Edge Cases:** Konkrete, testbare Bedingungen (inkl. Grenzfälle).
+5. **Implementation Plan (Plan Lock):** Max. 3 Schritte + welche Dateien geändert werden (und welche *nicht*).
+6. **Verification Command(s):** Exakter Befehl, der den Erfolg beweist.
+
+Im Workshop unterscheiden wir zwei SDD-Szenarien:
+
+- **Brownfield SDD (`incident-triage-hub`):** Die Spec begrenzt eine Änderung in einer bestehenden Codebase (Bugfix oder Feature aus `BACKLOG.md`), schützt bestehende Schnittstellen und definiert gezielte Tests.
+- **Greenfield SDD (`greenfield-puzzle-game`):** Es gibt noch keinen Code. Die Spec erschafft erst die Produktform (PRD -> Mechanics Spec -> Testvertrag -> erste kleine Slice).
+
+## Von leichtgewichtig bis Tool-gestützt
+
+SDD lässt sich in drei Reifegraden betreiben:
 
 ```text
-Manuelle Prompt-Karten zeigen das Prinzip.
-Superpowers zeigt Methodik als installierbares Agentenverhalten.
-OpenSpec zeigt Specs als versionierte Projektartefakte.
+Stufe 1: Repo-lokale Spec-Dateien (specs/_TEMPLATE.md)  -> Sofort in jedem Harness nutzbar, 0 Setup
+Stufe 2: Methodik-Skills (z.B. Superpowers)             -> Erzwingt Spec -> Plan -> TDD als Agent-Gewohnheit
+Stufe 3: Dediziertes Spec-CLI (z.B. OpenSpec / Spec Kit) -> Verwaltet Proposals, Spec-Deltas und Task-Archive
 ```
 
-Vertiefungen:
-
+Optionale Vertiefungen für Stufe 2 & 3:
 - [Superpowers Hands-on](../../resources/superpowers-hands-on.md)
 - [OpenSpec Hands-on](../../resources/openspec-hands-on.md)
-
-## Mini-Beispiel
-
-Greenfield vage:
-
-```text
-Build a novel puzzle game.
-```
-
-Greenfield besser:
-
-```text
-First write three concepts, recommend one, then write a PRD, mechanics spec,
-test plan, and first implementation slice. Do not implement yet.
-```
-
-Brownfield vage:
-
-```text
-Fix the timer test.
-```
-
-Brownfield Spec:
-
-```text
-Problem:
-Daily time schedules can wrap to tomorrow even when execution is still inside the target second.
-
-Desired behavior:
-If now is 12:00:00.500 and the schedule is time(12, 0, 0), the next fire time stays today.
-
-Non-goals:
-No cron rewrite, no new time abstraction, no dependency changes.
-
-Acceptance:
-- the focused timer regression passes
-- existing interval, datetime, and cron behavior remains unchanged
-- the regression test is not weakened
-```
+- [Workflow Comparison Lab](../../resources/workflow-comparison-lab.md)
 
 ## Live-Demo
 
-Bitte den Agenten:
+Zeige zuerst das fertige Beispiel [EXAMPLE-near-breach-warning.md](../../playground/incident-triage-hub/specs/EXAMPLE-near-breach-warning.md) und stelle die Frage:
+
+> „Wenn ihr diesen 30-Zeilen-Text freigebt — wie hoch ist die Wahrscheinlichkeit, dass der Agent danach genau das Richtige baut?“
+
+Lass danach live aus einem Einzeiler eine Spec-Datei für ein anderes Backlog-Item generieren (noch **ohne** Code-Edits!):
 
 ```text
-Write a PRD and mechanics spec for a novel minimal puzzle game. Do not edit code yet.
-```
-
-Danach:
-
-```text
-Write a mini-spec for fixing the failing Flock timer precision regression. Do not edit code yet.
-```
-
-Vergleiche:
-
-```text
-Which spec had to create product shape, and which spec had to respect existing shape?
+Do not edit any production or test files yet.
+Read playground/incident-triage-hub/README.md, triage/models.py, triage/rules.py, and specs/_TEMPLATE.md.
+Create a spec file at playground/incident-triage-hub/specs/001-fix-triage-bugs.md for fixing the failing tests in tests/test_rules.py.
+Keep it under 250 words and wait for my review.
 ```
 
 ## Takeaway
 
-Specs machen Agenten nicht langsamer. Specs machen falsche Geschwindigkeit sichtbar.
+Specs machen Agenten nicht langsamer. **Specs verhindern, dass der Agent mit Höchstgeschwindigkeit in die falsche Richtung rennt.**

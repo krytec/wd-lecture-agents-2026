@@ -34,7 +34,7 @@ Stand der Recherche: 2026-05-21.
 
 ## Lernziel
 
-Studierende sollen sehen, dass Spec-driven Development nicht nur ein langer Prompt sein muss. Specs können als reviewbare Dateien im Repo leben.
+Teilnehmende sollen sehen, dass Spec-driven Development nicht nur ein langer Prompt sein muss. Specs können als reviewbare Dateien im Repo leben.
 
 Die Aha-Frage:
 

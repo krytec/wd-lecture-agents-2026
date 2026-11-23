@@ -1,5 +1,7 @@
 """Tiny in-memory issue tracker for agent workshop exercises."""
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 
 

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "INC-101",
+    "title": "Checkout API returns 502 on EU cluster",
+    "service": "checkout",
+    "severity": "sev1",
+    "status": "investigating",
+    "owner": "team-payments",
+    "age_minutes": 45,
+    "tags": ["api", "eu-west", "gateway"]
+  },
+  {
+    "id": "INC-102",
+    "title": "Duplicate invoice emails sent overnight",
+    "service": "billing",
+    "severity": "sev2",
+    "status": "open",
+    "owner": "team-billing",
+    "age_minutes": 180,
+    "tags": ["email", "scheduler", "customer-facing"]
+  },
+  {
+    "id": "INC-103",
+    "title": "Login latency spike after token cache flush",
+    "service": "auth",
+    "severity": "sev1",
+    "status": "open",
+    "owner": "team-identity",
+    "age_minutes": 15,
+    "tags": ["latency", "redis", "login"]
+  },
+  {
+    "id": "INC-104",
+    "title": "Nightly analytics export delayed by 20 minutes",
+    "service": "analytics",
+    "severity": "sev3",
+    "status": "open",
+    "owner": "team-data",
+    "age_minutes": 95,
+    "tags": ["batch", "warehouse"]
+  },
+  {
+    "id": "INC-105",
+    "title": "Legacy webhook retry loop exceeded limit",
+    "service": "billing",
+    "severity": "sev1",
+    "status": "resolved",
+    "owner": "team-billing",
+    "age_minutes": 210,
+    "tags": ["webhook", "legacy"]
+  },
+  {
+    "id": "INC-106",
+    "title": "Minor alignment glitch in admin footer",
+    "service": "admin-ui",
+    "severity": "sev4",
+    "status": "open",
+    "owner": "team-web",
+    "age_minutes": 320,
+    "tags": ["css", "ui"]
+  },
+  {
+    "id": "INC-107",
+    "title": "Search autocomplete drops German umlauts",
+    "service": "search",
+    "severity": "sev2",
+    "status": "investigating",
+    "owner": "team-discovery",
+    "age_minutes": 65,
+    "tags": ["i18n", "search", "ux"]
+  }
+]

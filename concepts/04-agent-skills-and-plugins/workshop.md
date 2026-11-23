@@ -51,12 +51,12 @@ Wenn du nichts installieren willst, kopiere die Skill einfach in den Prompt und 
 
 ## Schritt 4: Skill anwenden
 
-Prompt:
+Prompt für das lokale Praxisprojekt `incident-triage-hub`:
 
 ```text
 Use the repo-cartographer skill.
-Map the Flock timer scheduling path before any edits.
-Task after mapping: identify why the focused timer regression fails and propose the smallest fix.
+Map playground/incident-triage-hub before any edits.
+Task after mapping: identify why the tests in tests/test_rules.py fail and propose the smallest fix.
 Do not edit yet.
 ```
 
@@ -67,11 +67,11 @@ Eine Skill steht und fällt mit der `description`.
 Teste zwei Prompts:
 
 ```text
-Where does Flock calculate the next fire time for scheduled agents?
+Where does incident-triage-hub calculate SLA breaches and incident priority?
 ```
 
 ```text
-I want to fix a timer precision bug in Flock, but first map the relevant code.
+I want to add a new handover report to incident-triage-hub, but first map the relevant code.
 ```
 
 Frage:

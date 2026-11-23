@@ -8,7 +8,7 @@ Der Lernpunkt:
 
 ## Ziel
 
-Studierende sollen aus einem vagen Produktwunsch eine prüfbare erste Version eines Puzzle-Spiels ableiten.
+Teilnehmende sollen aus einem vagen Produktwunsch eine prüfbare erste Version eines Puzzle-Spiels ableiten.
 
 Sie üben:
 
@@ -16,7 +16,7 @@ Sie üben:
 - PRD, Mechanics Spec und Non-goals zu schreiben
 - "production ready" als konkrete Gates zu definieren
 - Tests vor der Implementierung zu planen
-- eine erste Slice mit dem Ralph Loop zu bauen
+- eine erste Slice mit dem SDD Execution Loop (`Specify -> Plan Lock -> Execute -> Verify`) zu bauen
 - Browser-Automation als Beweis einzuplanen
 
 ## Ausgangsprompt
@@ -154,28 +154,26 @@ Return:
 - explicit non-goals
 ```
 
-## Schritt 6: Ralph Loop für die Implementierung
+## Schritt 6: SDD Execution Loop für die Implementierung
 
 Jetzt erst darf gebaut werden.
 
 ```text
-Use the Ralph loop for the first implementation slice.
+Follow the SDD Execution Loop for the first implementation slice.
 
-Read:
-Read the approved PRD, mechanics spec, and test plan. Do not edit.
-
-Ask:
+1. Explore & Verify Spec:
+Read the approved PRD, mechanics spec, and test plan. Do not edit yet.
 Ask at most one blocking question. If none is needed, say "No blocker".
 
-Lock:
-Restate the exact slice, non-goals, files likely to create, and done criteria.
-Wait for confirmation.
+2. Plan Lock:
+Restate the exact first slice, non-goals, files to create, and done criteria.
+Wait for confirmation before creating or editing code files.
 
-Produce:
-Implement only the locked slice. Write tests. Run unit tests, build, and browser automation.
+3. Execute:
+Once confirmed, implement only the locked slice. Write tests. Run unit tests, build, and browser automation.
 
-Halt:
-Stop after verification. Report changed files, commands run, browser evidence, and residual risk.
+4. Verify & Halt:
+Stop after verification. Report changed files, commands run, browser evidence, and residual risk against the spec.
 ```
 
 ## Production-Ready Gates

@@ -17,20 +17,19 @@ Jedes Modul hat deshalb denselben Rhythmus:
 
 ## Setup vor der Veranstaltung
 
-- Stelle sicher, dass mindestens ein Agent-Harness verfügbar ist.
-- Empfohlen: Codex CLI, Claude Code oder GitHub Copilot mit Agent Mode.
-- Öffne das [Workbook](workbook.md) als gemeinsame Arbeitsfläche.
+- Schicke Teilnehmenden 1–2 Tage vorher den Link zu [setup-and-preflight.md](setup-and-preflight.md) mit dem Befehl `python3 scripts/preflight.py`.
+- Stelle sicher, dass mindestens ein Agent-Harness verfügbar ist (GitHub Copilot, Claude Code, Codex, Cursor, Windsurf, Gemini CLI / Antigravity).
+- Öffne das [Workbook](workbook.md) als gemeinsame Arbeitsfläche und [hackathon-challenges.md](hackathon-challenges.md) für den Praxis-Sprint.
 - Halte den [Agent Failure Modes Catalog](agent-failure-modes.md) griffbereit, um schlechte Agentenläufe sofort zu benennen und zu korrigieren.
-- Prüfe, ob Python 3 verfügbar ist:
+- Prüfe selbst einmal lokal:
 
 ```bash
-python --version
-python -m unittest discover -s playground/tiny-issue-tracker/tests
+python3 scripts/preflight.py
 ```
 
-Die Playground-Tests dürfen am Anfang rot sein. Das ist Absicht. Der Playground ist nur der Warm-up.
+Beide lokalen Playgrounds (`tiny-issue-tracker` und `incident-triage-hub`) laufen **100 % offline ohne externe Pakete**. Ihre Tests sind am Anfang absichtlich rot — das sind die Übungsfälle.
 
-Halte für den Greenfield-Track bereit:
+Halte für schnelle Teams oder Vertiefung optional bereit:
 
 ```text
 resources/greenfield-puzzle-game.md
@@ -40,18 +39,14 @@ resources/openspec-hands-on.md
 resources/workflow-comparison-lab.md
 ```
 
-Der Greenfield-Track braucht kein vorbereitetes Repo. Studierende können in einem leeren Ordner arbeiten. Wichtig ist: erst PRD und Mechanics Spec, dann eine kleine Slice.
+Der Greenfield-Track braucht kein vorbereitetes Repo. Teilnehmende können in einem leeren Ordner arbeiten. Wichtig ist: erst PRD und Mechanics Spec, dann eine kleine Slice.
 
-Bereite zusätzlich den Flock-Track vor:
-
-```bash
-git clone https://github.com/whiteducksoftware/flock.git
-cd flock
-git checkout lecture/timer-precision-bug-start
-uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q
-```
-
-Der Flock-Test muss rot sein. Die Failure-Zeile soll auf `2026-05-20` vs `2026-05-19` zeigen. Siehe [flock-facilitator-notes.md](flock-facilitator-notes.md).
+### Didaktische Staffelung der Playgrounds über den Workshop
+Damit Teilnehmende nicht schon in Modul 01 die Bugs des Hauptprojekts wegfixen, sind die Übungen bewusst gestaffelt:
+1. **Modul 01 (Mindset):** Kurzer Bugfix am `playground/tiny-issue-tracker` (5–10 Min) + erste **Read-Only** Diagnose am `playground/incident-triage-hub`.
+2. **Modul 02–04 (Context, MCP, Skills):** `AGENTS.md` entwerfen und `repo-cartographer` (Read-Only Mapping!) auf `playground/incident-triage-hub` anwenden — **noch ohne Edits**.
+3. **Modul 05–07 & Mini-Hackathon:** Erst jetzt wird `playground/incident-triage-hub` nach dem **Spec-Driven Development (SDD)**-Prinzip verändert (zuerst Spec-Datei in `specs/*.md` anlegen, Plan locken, dann Track A Bugfix oder Track B/C Feature/Test-Suite aus `BACKLOG.md` umsetzen; Track D: `Greenfield Puzzle Game`).
+4. **Schneller Reset jederzeit möglich:** `git checkout -- playground/` setzt beide Playgrounds sofort in den Startzustand zurück.
 
 Optional für die Industrie-Workflow-Labs:
 
@@ -81,10 +76,10 @@ Fix the app.
 Besser:
 
 ```text
-Goal: Fix the failing Flock timer precision regression.
-Context: Start by reading AGENTS.md, README.md, timer.py, and tests/test_timer_component.py.
-Constraints: Do not read PR #412 before diagnosing. Do not change the regression test unless it is wrong.
-Done when: the focused pytest command passes and you summarize the changed behavior.
+Goal: Diagnose and fix the failing tests in playground/incident-triage-hub.
+Context: Start by reading playground/incident-triage-hub/README.md, triage/models.py, triage/rules.py, and tests/test_rules.py.
+Constraints: Do not read SOLUTION.md. Do not change existing tests. Keep changes scoped to triage/rules.py.
+Done when: python3 -m unittest discover -s playground/incident-triage-hub/tests -v passes and you summarize the changed behavior.
 ```
 
 Der Effekt ist sofort sichtbar: Der Agent exploriert gezielter, macht kleinere Diffs und erklärt besser.
@@ -97,21 +92,20 @@ Zeige [examples/skills/repo-cartographer/SKILL.md](../examples/skills/repo-carto
 
 Die Aha-Antwort: Es ist Team-Wissen als portable, agent-native Verpackung.
 
-### Demo 3: Ralph Loop
+### Demo 3: Der SDD Execution Loop (Plan Mode & Spec-Datei)
 
 An die Tafel:
 
 ```text
-Read -> Ask -> Lock -> Produce -> Halt
+Explore -> Specify (specs/*.md) -> Plan Lock -> Execute -> Verify gegen Spec
 ```
 
-Dann mit einem Agenten live anwenden:
+Dann mit einem Agenten live anwenden (oder an [`playground/incident-triage-hub/specs/EXAMPLE-near-breach-warning.md`](../playground/incident-triage-hub/specs/EXAMPLE-near-breach-warning.md) zeigen):
 
-- Read: relevante Dateien lesen lassen
-- Ask: eine Rückfrage erzwingen
-- Lock: Scope und Done-Kriterien festlegen
-- Produce: kleinste Änderung bauen
-- Halt: stoppen, Diff und Tests zeigen
+- **Explore & Specify:** Relevante Dateien lesen lassen und eine 25-zeilige Spec-Datei in `specs/` anlegen (45 Sekunden menschliches Review statt 30 Minuten Code-Review!).
+- **Plan Lock:** Im Plan Mode max. 3 Schritte + betroffene Dateien festlegen und abnicken.
+- **Execute:** Nur die freigegebene Slice bauen und Tests ausführen.
+- **Verify:** In einer zweiten Rolle (Reviewer / Subagent) `git diff` streng gegen die Spec-Datei prüfen.
 
 ### Demo 4: Greenfield vs Brownfield
 
@@ -121,8 +115,8 @@ Zeige die zwei Arbeitsarten nebeneinander:
 Greenfield Puzzle:
 Erst PRD -> Mechanics Spec -> Testplan -> Slice -> Code
 
-Brownfield Flock:
-Erst Repo lesen -> Failure verstehen -> Scope locken -> Fix -> Beweis
+Brownfield Incident Triage Hub:
+Erst Repo lesen -> Failure verstehen -> Scope locken -> Fix/Feature -> Beweis
 ```
 
 Die Aha-Antwort: Greenfield braucht mehr explizite Produktform, Brownfield braucht mehr Respekt vor bestehender Form.
@@ -141,7 +135,7 @@ Repo-Artefakte halten Proposal, Spec-Deltas, Design und Tasks fest.
 
 Leitsatz:
 
-> Man kann eine eigene Spec-driven-Development-Skill bauen. Im Workshop schauen wir uns bewusst zwei lebendige Standards an, damit Studierende echte Arbeitsflächen sehen.
+> Man kann eine eigene Spec-driven-Development-Skill bauen. Im Workshop schauen wir uns bewusst zwei lebendige Standards an, damit Teilnehmende echte Arbeitsflächen sehen.
 
 ### Demo 6: Drei Wege, ein Change
 
@@ -160,24 +154,30 @@ Spec und Tasks als repo-lokale Artefakte.
 
 Die Aha-Antwort: Der beste Workflow hängt an Risiko, Teamgröße und Reviewbedarf, nicht am Tool-Namen.
 
-## Zeitmanagement
+## Zeitmanagement & Format-Varianten
 
-Wenn die Gruppe sehr frisch ist:
+### Variante 1: Standard-Halbtag (3,5–4h inkl. Mini-Hackathon)
+- Erste Hälfte (ca. 2h15 inkl. Pause): Module 01–07 kompakt mit kurzen Live-Demos und `tiny-issue-tracker` als Warm-up.
+- Zweite Hälfte (ca. 1h30): 60 Min Mini-Hackathon-Sprint ([hackathon-challenges.md](hackathon-challenges.md)) auf dem `incident-triage-hub` (Tracks A–D) + 25 Min Show & Tell + 10 Min Wrap-up.
 
-- Modul 03 MCP kürzen
-- Modul 06 Orchestration einfacher halten
-- Greenfield nur bis PRD und erste Slice führen
-- mehr Zeit für Modul 02 und 07 geben
-- Flock nur als geführte Demo verwenden, nicht als freie Aufgabe
+### Variante 2: Kompakt-Workshop (3h)
+- Modul 03 (MCP) und Modul 04 (Skills) auf 15 Min Kurz-Überblick komprimieren.
+- Fokus auf Modul 01 (Agent Contract), 02 (`AGENTS.md`), 05 (Mini-Spec), 07 (Verification & Safety).
+- 45 Min Praxis-Sprint + 15 Min Show & Tell.
 
-Wenn die Gruppe sehr stark ist:
+### Anpassung nach Gruppe
+Wenn die Gruppe überwiegend Beginner oder gemischt (inkl. PM/QA/Ops) ist:
 
-- Modul 04 Skill bauen lassen
-- Modul 05 Greenfield-Spec in echte Tasks splitten lassen
-- Superpowers, OpenSpec oder das dreiteilige Workflow Comparison Lab auswählen
-- Modul 06 mit zwei parallelen Agent-Rollen simulieren lassen
-- Browser-Automation für die Puzzle-Slice wirklich laufen lassen
-- Nach dem Fix den echten PR #412 als Review-Vergleich nutzen
+- Modul 03 MCP kurz halten (konzeptuell statt Live-Server-Setup)
+- Beim Sprint aktiv auf **Track A** (Bugfix) und **Track C** (QA / PM / Skill) verweisen
+- Mehr Zeit für Modul 02 (`AGENTS.md`) und 07 (Verification & Datenschutz/Secrets) geben
+
+Wenn die Gruppe überwiegend erfahren (Intermediate Engineers) ist:
+
+- Modul 04 eigene Skill bauen lassen
+- Im Sprint **Track B** (Feature aus `BACKLOG.md` mit Spec-Datei + SDD Execution Loop) oder **Track D** (`Greenfield Puzzle Game`) empfehlen
+- Optional das dreiteilige Workflow Comparison Lab (Manual vs. Superpowers vs. OpenSpec) antesten
+- Zwei parallele Agent-Rollen (Investigator / Builder / Reviewer) nutzen lassen
 
 ## Moderationssätze
 
@@ -185,7 +185,7 @@ Wenn die Gruppe sehr stark ist:
 - "Wenn ihr den Prompt nicht reviewen könnt, könnt ihr den Output auch nicht gut reviewen."
 - "MCP gibt Hände. Skills geben Gewohnheiten. Specs geben Richtung. Reviews geben Bremsen."
 - "Wir wollen keine perfekten Prompts. Wir wollen robuste Arbeitsabläufe."
-- "Toy-Projekte zeigen, dass Agents Code schreiben können. Flock zeigt, ob wir Agents führen können."
+- "Ein-Datei-Snippets zeigen, dass Agents Code schreiben können. Multi-File-Projekte zeigen, ob wir Agents führen können."
 - "Greenfield braucht Spec, weil noch keine Codebase widerspricht."
 - "Wenn wir den Fehler benennen können, können wir ihn stoppen."
 - "Manual, Superpowers und OpenSpec sind keine Religionen. Sie sind unterschiedliche Reibungsprofile."

@@ -26,7 +26,7 @@ Stand der Recherche: 2026-05-21.
 
 ## Lernziel
 
-Studierende sollen sehen, wie sich ein Agent verhält, wenn Methodik als Plugin/Skill-System installiert ist.
+Teilnehmende sollen sehen, wie sich ein Agent verhält, wenn Methodik als Plugin/Skill-System installiert ist.
 
 Sie sollen nicht blind glauben, dass Superpowers "besser" ist. Sie sollen beobachten:
 

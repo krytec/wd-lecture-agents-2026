@@ -1,185 +1,79 @@
-# Workshop: Spec für Greenfield und Flock
+# Workshop: Spec-Driven Development (SDD) in der Praxis
 
 ## Ziel
 
-Du lernst zwei Spec-Arten:
+Du erstellst mit deinem Agenten eine **repo-lokale Spec-Datei** (`specs/*.md`), schärfst Non-Goals und Edge Cases, und gibst den Plan frei — bevor eine einzige Zeile Produktivcode geändert wird.
 
-- Greenfield: erst Produktform schaffen, bevor Code existiert.
-- Brownfield: bestehendes Verhalten verstehen und den Fix begrenzen.
+Wähle **einen** der beiden Tracks:
+- **Track A (Empfohlen — Brownfield am `incident-triage-hub`):** Spec für den Bugfix-Sprint oder für ein neues Feature aus [`BACKLOG.md`](../../playground/incident-triage-hub/BACKLOG.md).
+- **Track B (Greenfield Puzzle Game):** PRD, Mechanics Spec und erste Slice für ein neues Web-Puzzle-Spiel.
 
 ## Dauer
 
-30 bis 35 Minuten.
+25 bis 30 Minuten.
 
-## Track A: Greenfield Puzzle Game
+---
 
-Nutze [../../resources/greenfield-puzzle-game.md](../../resources/greenfield-puzzle-game.md).
+## Track A: Brownfield SDD am `incident-triage-hub`
 
-### Schritt 1: Konzeptoptionen
+### Schritt 1: Vorbild & Template anschauen (2 Min)
 
-```text
-Do not implement.
+Wirf einen kurzen Blick auf:
+- [playground/incident-triage-hub/specs/_TEMPLATE.md](../../playground/incident-triage-hub/specs/_TEMPLATE.md)
+- [playground/incident-triage-hub/specs/EXAMPLE-near-breach-warning.md](../../playground/incident-triage-hub/specs/EXAMPLE-near-breach-warning.md)
 
-Return three puzzle game concepts.
-For each concept include:
-- one-sentence core mechanic
-- why it is novel enough
-- why it is easy to learn
-- why it is hard to master
-- procedural generation approach
-- losing condition
-- mobile interaction model
-- main implementation risk
+Beachte: Die Spec beschreibt **beobachtbares Verhalten, Non-Goals, Edge Cases und den 3-Schritte-Plan**, nicht schon den fertigen Python-Code.
 
-Then recommend one concept and explain why it is the best workshop candidate.
-```
+### Schritt 2: Spec-Datei vom Agenten entwerfen lassen (Explore -> Specify)
 
-### Schritt 2: PRD und Mechanics Spec
+Wähle dein Ziel:
+- **Für Beginner:** Die 3 Bugs (4 fehlschlagenden Tests) in `tests/test_rules.py` spezifizieren (`specs/001-fix-core-rules.md`).
+- **Für Intermediate / PM / QA:** Ein neues Feature oder Test-Audit aus [`BACKLOG.md`](../../playground/incident-triage-hub/BACKLOG.md) spezifizieren (z.B. `specs/002-handover-report.md` oder `specs/002-csv-export.md`).
+
+Gib deinem Agenten diesen Prompt:
 
 ```text
-Write a PRD and mechanics spec for the recommended puzzle game.
-Do not implement.
+We are using Spec-Driven Development (SDD).
+Do not edit any production code or test files yet.
 
-Include:
-- product goal
-- target player
-- core loop
-- board/state model
-- legal moves
-- procedural generation rules
-- scoring
-- losing condition
-- non-goals
-- production-ready definition
-- deterministic seed behavior for tests
+1. Explore: Read playground/incident-triage-hub/README.md, triage/models.py, triage/rules.py, tests/test_rules.py, and specs/_TEMPLATE.md.
+2. Specify: Create a concise spec file at playground/incident-triage-hub/specs/001-my-spec.md following specs/_TEMPLATE.md for:
+   <Dein Ziel: z.B. "fixing the 4 failing tests in tests/test_rules.py" ODER "Backlog item #4: On-Call Handover Report">
+
+Keep it under 250 words. Stop after writing the spec file so I can review it.
 ```
 
-### Schritt 3: Testvertrag und erste Slice
+### Schritt 3: Menschliches Spec-Review (Der wichtigste SDD-Moment!)
+
+Lies die erzeugte Datei `playground/incident-triage-hub/specs/001-my-spec.md` kritisch durch:
+
+- **Verhalten statt Wunschdenken:** Sind die Acceptance Criteria konkret testbar?
+- **Non-Goals scharf genug?** Steht klar drin, was *nicht* geändert werden darf (keine neuen Dependencies, keine Änderung an unbeteiligten Dateien)?
+- **Edge Cases bedacht?** (z.B. leere Liste, unbekannte Severity, Groß-/Kleinschreibung, `resolved` vs. `open`?)
+- **Plan Lock realistisch?** Nennt der 3-Schritte-Plan die exakten Dateien?
+
+Wenn etwas zu vage oder zu aufgebläht ist, lass den Agenten die Spec schärfen (oder editiere die Markdown-Datei direkt selbst!):
 
 ```text
-Write the test plan and define the first implementation slice.
-Do not implement.
-
-The slice must include:
-- one core mechanic
-- deterministic seed mode
-- unit-testable game logic separated from UI
-- one losing condition
-- one restart flow
-- unit tests
-- browser automation checks
+Update playground/incident-triage-hub/specs/001-my-spec.md:
+- Remove any scope not strictly required.
+- Add an explicit edge case for <dein Edge Case>.
+- Set Status to Approved.
+Do not edit production code yet.
 ```
 
-Review-Frage:
+---
 
-```text
-Could another developer implement this slice without guessing the game rules?
-```
+## Track B: Greenfield SDD (`Greenfield Puzzle Game`)
 
-## Track B: Brownfield Flock-Bug
+Nutze [../../resources/greenfield-puzzle-game.md](../../resources/greenfield-puzzle-game.md), wenn du SDD ohne bestehende Codebase üben möchtest:
 
-Jetzt dieselbe Spec-Disziplin in einer bestehenden Codebase.
+1. **Konzeptoptionen:** Lass den Agenten 3 unterschiedliche Spielmechaniken vorschlagen (ohne Code!) und wähle eine aus.
+2. **PRD & Mechanics Spec als Datei speichern:** Lass den Agenten `playground/puzzle-spec.md` mit Core Loop, Board/State-Modell, Losing Condition, deterministischem Seed-Modus und expliziten Non-Goals anlegen.
+3. **Erste Slice & Testvertrag locken:** Definiere in derselben Spec-Datei die kleinste spielbare und testbare erste Scheibe.
 
-### Schritt 1: Problem beobachten
+Review-Frage für beide Tracks:
 
-Führe aus:
+> „Könnte jetzt ein anderer Agent (oder ein Teammitglied) in einer frischen Session allein mit dieser Spec-Datei genau das Richtige bauen?“
 
-```bash
-uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q
-```
-
-Notiere:
-
-- Welche Tests schlagen fehl?
-- Welches Verhalten erwarten sie?
-- Was ist nicht Teil des Problems?
-
-### Schritt 2: Spec-Prompt
-
-```text
-Write a mini-spec for fixing the failing Flock timer precision regression.
-Do not edit files.
-
-Include:
-- problem
-- current behavior inferred from code
-- desired behavior inferred from tests
-- non-goals
-- acceptance criteria
-- verification command
-
-Keep it under 250 words.
-```
-
-### Schritt 3: Spec reviewen
-
-Prüfe:
-
-- Enthalten die Acceptance Criteria alle fehlschlagenden Tests?
-- Gibt es versteckte neue Features?
-- Ist ein Non-goal genannt?
-- Ist der Testbefehl konkret?
-
-Wenn nötig:
-
-```text
-Revise the spec. Remove any feature not required by the tests.
-```
-
-### Schritt 4: Plan erzeugen
-
-```text
-Based on the approved mini-spec, propose an implementation plan.
-Use at most 3 steps.
-Name the exact file(s) to change.
-Do not edit yet.
-```
-
-### Schritt 5: Implementieren
-
-```text
-Implement the plan.
-Keep the public timer API stable.
-Run:
-uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q
-```
-
-### Schritt 6: Review gegen Spec
-
-```text
-Audit the final diff against the mini-spec.
-Return:
-- acceptance criteria satisfied
-- verification evidence
-- unrelated changes, if any
-- remaining risks
-```
-
-## Ergebnis
-
-Du hast einen vollständigen kleinen Spec-Loop durchlaufen:
-
-```text
-Problem -> Spec -> Plan -> Code -> Verification -> Audit
-```
-
-Und du hast den Unterschied gesehen:
-
-```text
-Greenfield: Spec erzeugt die Arbeitsform.
-Brownfield: Spec begrenzt die Änderung in bestehender Form.
-```
-
-## Optionale Industrie-Vertiefung
-
-Wenn noch Zeit ist oder die Gruppe schon agentenerfahren ist, zeige danach nicht noch mehr Prompt-Karten, sondern ein echtes Workflow-Werkzeug:
-
-- [Superpowers Hands-on](../../resources/superpowers-hands-on.md): derselbe Grundsatz als Skill-Methodik, inklusive TDD- und Review-Gates.
-- [OpenSpec Hands-on](../../resources/openspec-hands-on.md): derselbe Grundsatz als versionierte `openspec/changes/...` Artefakte im Repo.
-- [Workflow Comparison Lab](../../resources/workflow-comparison-lab.md): denselben Tiny-Change manuell, mit Superpowers und mit OpenSpec vergleichen.
-
-Leitfrage:
-
-```text
-Was war eben nur Chat-Disziplin, und was wird durch Tooling/Plugin/Artefakte dauerhaft?
-```
+Wenn ja: Deine Spec ist bereit für **Modul 06 (Plan-Execute-Verify & Orchestration)**!

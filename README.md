@@ -1,134 +1,120 @@
-# AI Coding Agents: 4h Praxisworkshop
+# AI Coding Agents: Interner Praxis-Workshop & Mini-Hackathon
 
-Dieses Repo ist ein kompletter Workshop-Kit für eine 4-stündige Vorlesung, Hackathon-Session oder Hands-on-Class zu modernen Coding Agents wie Codex, Claude Code, GitHub Copilot und ähnlichen High-Level-Harnesses.
+Dieses Repo ist ein kompletter, harness-neutraler Workshop-Kit für einen **3- bis 4-stündigen internen Praxis-Workshop mit Mini-Hackathon** — konzipiert für **Beginner bis Intermediate AI-Agent-User** in gemischten Teams (Software Engineering, QA, DevOps, Data und tech-affine Produkt-/Ops-Rollen).
 
-Ziel: Studierende sollen nicht nur wissen, dass Agents Code schreiben können. Sie sollen spüren, dass Agentenführung ein eigener Skill ist: Kontext geben, Werkzeuge anbinden, Skills bauen, Specs scharf machen, Loops orchestrieren, Ergebnisse verifizieren.
+**Ziel:** Teilnehmende sollen nicht nur sehen, dass Agents Code oder Texte generieren können. Sie sollen praktisch erleben, dass **Agentenführung ein eigener Skill** ist: präzisen Kontext geben, Werkzeuge sinnvoll einsetzen, wiederholbare Skills bauen, Specs schärfen, Loops kontrollieren und Ergebnisse verlässlich verifizieren.
 
-Der Kurs ist bewusst harness-neutral. Die Beispiele sind für Codex, Claude Code und GitHub Copilot gedacht, aber die Konzepte tragen auch zu Cursor, Cline, Windsurf, Gemini CLI, OpenCode und anderen Agent-Umgebungen.
+Der Workshop ist bewusst **harness-neutral**. Alle Übungen funktionieren mit **GitHub Copilot (Agent Mode), Claude Code, OpenAI Codex, Cursor, Windsurf, Cline, Gemini CLI / Antigravity** und ähnlichen Umgebungen.
 
-Die wichtigsten Arbeitsflächen:
+---
 
-- `playground/tiny-issue-tracker`: sehr kleiner Warm-up für den ersten Agent-Contract.
-- [Workbook](resources/workbook.md): Arbeitsfläche für Agent Contract, Mini-Spec, Verification und Handoff.
-- [Greenfield Puzzle Game](resources/greenfield-puzzle-game.md): neues Produkt erst spezifizieren, dann in eine kleine Slice schneiden.
-- [Flock Hands-on](resources/flock-hands-on.md): echtes Repo, echter Bug, echter Verifikationsdruck.
-- [Superpowers Hands-on](resources/superpowers-hands-on.md): aktuelle Skill-Methodik als installierbares Workflow-Bündel ausprobieren.
-- [OpenSpec Hands-on](resources/openspec-hands-on.md): Spec-driven Changes als repo-lokale Artefakte anlegen, anwenden und archivieren.
-- [Workflow Comparison Lab](resources/workflow-comparison-lab.md): Manual vs Superpowers vs OpenSpec am gleichen Change vergleichen.
-- [Agent Failure Modes Catalog](resources/agent-failure-modes.md): typische Agentenfehler erkennen und stoppen.
+## Start Here (5 Minuten vor dem Workshop)
+
+1. **Setup prüfen (1 Befehl):**
+   ```bash
+   python3 scripts/preflight.py
+   ```
+   Details & Troubleshooting: [Setup & Pre-Flight Check](resources/setup-and-preflight.md)
+2. **Deinen Pfad wählen:**
+   - **Beginner (erste echte Agent-Erfahrungen):** Starte mit dem 10-Minuten-Warm-up [tiny-issue-tracker](playground/tiny-issue-tracker/README.md) und wechsle danach in Track A von [Mini-Hackathon Challenges](resources/hackathon-challenges.md) auf dem lokalen [Incident Triage Hub](playground/incident-triage-hub/README.md).
+   - **Intermediate (nutzt Agents bereits im Alltag):** Nutze das Warm-up nur kurz als Kalibrierung und springe direkt in Track B (Spec-First Feature-Sprint im [Incident Triage Hub](playground/incident-triage-hub/BACKLOG.md)) oder Track D ([Greenfield Puzzle Game](resources/greenfield-puzzle-game.md)).
+   - **QA, PM, DevOps & Data:** Alle Kernkonzepte (Agent Contract, Specs, Skills, Verification) gelten 1:1 auch für Test-Audits, PRDs, Runbooks und Automatisierung — siehe **Track C** in [Mini-Hackathon Challenges](resources/hackathon-challenges.md).
+
+---
+
+## Die wichtigsten Arbeitsflächen
+
+- [AGENTS.md](AGENTS.md): Lebendes Dogfooding-Beispiel für dauerhafte Repo-Instruktionen (und Schutz gegen Spoiler im Workshop).
+- [Setup & Pre-Flight Check](resources/setup-and-preflight.md): 5-Minuten-Checkliste, Smoke-Test und Troubleshooting.
+- [Mini-Hackathon Challenges & Show-and-Tell](resources/hackathon-challenges.md): Gestaffelte Tracks (Beginner, Intermediate, Cross-Functional, Greenfield) + Bewertungsrubrik.
+- [1-Page Cheatsheet](resources/cheatsheet.md): Kompakter Spickzettel für den Arbeitsalltag nach dem Workshop.
+- `playground/tiny-issue-tracker`: Mini-Warm-up (1 Datei, dependency-free) für den ersten Agent Contract in Modul 01.
+- `playground/incident-triage-hub`: **Selbstenthaltenes Praxisprojekt** (CLI + lokale Web-UI + Tests, 100 % offline & dependency-free) mit 3 realistischen Bugs und Feature-Backlog.
+- [Workbook](resources/workbook.md): Arbeitsfläche für Agent Contract, Read-Only Map, Mini-Spec, Verification und Handoff.
+- [Prompt Cards](resources/prompt-cards.md): Kopierbare Standard-Prompts für den Alltag.
+- [Agent Failure Modes Catalog](resources/agent-failure-modes.md): Typische Agentenfehler erkennen und sofort stoppen.
+- [Harness Matrix](resources/harness-matrix.md): Wie sich Konzepte auf Copilot, Claude Code, Codex & Co. abbilden.
+
+**Optionale Vertiefungs-Tracks (für schnelle Teams oder Follow-up-Sessions):**
+- [Greenfield Puzzle Game](resources/greenfield-puzzle-game.md): Neues Produkt erst spezifizieren, dann in eine kleine Slice schneiden.
+- [Superpowers Hands-on](resources/superpowers-hands-on.md) & [OpenSpec Hands-on](resources/openspec-hands-on.md) & [Workflow Comparison Lab](resources/workflow-comparison-lab.md): Installierbare Skill- und Spec-Workflows im Vergleich.
+
+---
 
 ## Lernversprechen
 
-Nach 4 Stunden können Teilnehmende:
+Nach 3–4 Stunden können Teilnehmende:
 
-- einen Coding Agent wie einen Junior-Kollegen mit Werkzeugen führen, nicht wie eine Suchmaschine befragen
+- einen AI Agent wie einen schnellen Junior-Kollegen mit Werkzeugen führen, statt ihn wie eine Suchmaschine zu befragen
 - stabile Kontextregeln formulieren (`AGENTS.md`, `CLAUDE.md`, Copilot instructions)
-- MCP als Werkzeug- und Kontextbrücke erklären und sinnvoll einsetzen
-- eine kleine Agent Skill im offenen `SKILL.md`-Format bauen
-- Spec-driven Development als Anti-Drift-Mechanik verwenden
-- einfache Orchestrierungsformen wie den Ralph Loop praktisch anwenden
-- Agent-Ergebnisse mit Tests, Diffs, Reviews und Sicherheitschecks absichern
+- MCP als Werkzeug- und Kontextbrücke einordnen und sinnvoll nutzen
+- eine kleine, wiederverwendbare Agent Skill im offenen `SKILL.md`-Format erstellen
+- **Spec-Driven Development (SDD)** mit repo-lokalen Spec-Dateien (`specs/*.md`) als Anti-Drift-Mechanik einsetzen
+- den **SDD Execution Loop** (`Explore -> Specify -> Plan -> Execute -> Verify`) mit Plan Mode und Rollen-Trennung / Subagents praktisch anwenden
+- Agent-Ergebnisse mit Tests, Diffs, Spec-Audits und Sicherheitschecks sauber absichern
 
-## 4h Run of Show
+---
 
-| Zeit | Modul | Kernfrage | Output |
+## Halbtags-Agenda (3,5–4h inkl. Mini-Hackathon)
+
+*(Kompakte 3h-Variante und Moderationshinweise im [Facilitator Guide](resources/facilitator-guide.md).)*
+
+| Zeit | Block | Kernfrage | Praxis-Output |
 | --- | --- | --- | --- |
-| 00:00-00:10 | Setup und framing | Was ist heute anders als Autocomplete? | gemeinsames Mentalmodell |
-| 00:10-00:35 | [01 Agent Mindset](concepts/01-agent-mindset/README.md) | Wie führt man einen Agenten? | guter Task-Prompt |
-| 00:35-01:05 | [02 Context and Instructions](concepts/02-context-and-instructions/README.md) | Was gehört dauerhaft in den Kontext? | kleines Agent Contract File |
-| 01:05-01:35 | [03 MCP Tooling](concepts/03-mcp-tooling/README.md) | Wann braucht ein Agent echte Tools? | MCP-Tool-Plan |
-| 01:35-01:45 | Pause | Kopf kurz lüften | Kaffee |
-| 01:45-02:20 | [04 Agent Skills and Plugins](concepts/04-agent-skills-and-plugins/README.md) | Wie verpackt man wiederholbare Expertise? | eigene `SKILL.md` |
-| 02:20-02:55 | [05 Spec-driven Development](concepts/05-spec-driven-development/README.md) | Wie stoppt man Vibe-Drift? | Mini-Spec und Task-Slice |
-| 02:55-03:25 | [06 Orchestration and Ralph Loop](concepts/06-orchestration-and-ralph-loop/README.md) | Wie lässt man Agents arbeiten, ohne Kontrolle zu verlieren? | Loop-Protokoll |
-| 03:25-03:50 | [07 Verification and Safety](concepts/07-verification-and-safety/README.md) | Wie weiß man, dass der Agent nicht nur plausibel klingt? | Verifikations-Checkliste |
-| 03:50-04:00 | Wrap | Was nehmt ihr morgen in euren Workflow? | persönlicher Agent-Spickzettel |
+| 00:00–00:15 | Kickoff & Pre-Flight | Was ist heute anders als Autocomplete? Läuft alles? | gemeinsames Mentalmodell + grüner Pre-Flight |
+| 00:15–00:40 | [01 Agent Mindset](concepts/01-agent-mindset/README.md) | Wie führt man einen Agenten? | erster Agent Contract am `tiny-issue-tracker` |
+| 00:40–01:05 | [02 Context and Instructions](concepts/02-context-and-instructions/README.md) | Was gehört dauerhaft in den Kontext? | kleines `AGENTS.md` / Contract File |
+| 01:05–01:30 | [03 MCP Tooling](concepts/03-mcp-tooling/README.md) & [04 Skills](concepts/04-agent-skills-and-plugins/README.md) | Wann Tools (MCP), wann Methoden (Skills)? | eigene `SKILL.md`-Skizze |
+| 01:30–01:45 | Pause | Kopf lüften & Track wählen | Kaffee + Team-/Track-Wahl |
+| 01:45–02:15 | [05 Spec-Driven Development](concepts/05-spec-driven-development/README.md) & [06 SDD Execution & Orchestration](concepts/06-sdd-execution-and-orchestration/README.md) | Wie steuert man Agents über Specs, Plan Mode & Subagents? | eigene Spec-Datei (`specs/*.md`) & Plan Lock |
+| 02:15–02:30 | [07 Verification & Safety](concepts/07-verification-and-safety/README.md) | Wie beweist man Qualität & schützt interne Daten? | Spec-Audit & Verifikations-Checkliste |
+| 02:30–03:25 | **Mini-Hackathon Sprint (55 Min)** | SDD End-to-End am [Incident Triage Hub](playground/incident-triage-hub/README.md) (Tracks A–D) | Spec + geprüfter Fix, Feature, Tests oder Skill |
+| 03:25–03:50 | **Show & Tell (3 Min/Team)** | Was hat funktioniert, welcher Fehler wurde gestoppt? | Demo + kurzes Feedback nach Rubrik |
+| 03:50–04:00 | Wrap-up | Was nehmt ihr morgen in euren Workflow mit? | persönliche Agent-Regel |
+
+---
 
 ## Repo-Struktur
 
 ```text
+AGENTS.md                    # Repo-weite Agent-Guardrails (Dogfooding & Spoiler-Schutz)
+scripts/
+  preflight.py               # Zero-dependency Setup-Check
 concepts/
-  01-agent-mindset/
-    README.md
-    workshop.md
-    further-reading.md
+  01-agent-mindset/          # je Modul: README.md, workshop.md, further-reading.md
   ...
-playground/tiny-issue-tracker/
-  Kleine Warm-up-Codebase für Agentenaufgaben
+  07-verification-and-safety/
+playground/
+  tiny-issue-tracker/        # Warm-up für Modul 01 (1 Datei, 5-10 Min)
+  incident-triage-hub/       # Selbstenthaltenes Praxisprojekt (CLI + Web-UI + Tests + Backlog)
 examples/
   skills/
   plugins/
   mcp/
 resources/
+  setup-and-preflight.md
+  hackathon-challenges.md
+  cheatsheet.md
   facilitator-guide.md
   workbook.md
+  prompt-cards.md
+  agent-failure-modes.md
+  harness-matrix.md
   greenfield-puzzle-game.md
-  greenfield-facilitator-notes.md
   superpowers-hands-on.md
   openspec-hands-on.md
   workflow-comparison-lab.md
-  agent-failure-modes.md
-  flock-hands-on.md
-  flock-facilitator-notes.md
-  harness-matrix.md
-  prompt-cards.md
   research-notes.md
 ```
 
-Jeder Konzeptordner folgt demselben Muster:
+---
 
-- `README.md`: Theorie, Live-Demo-Idee, Kernbegriffe
-- `workshop.md`: Schritt-für-Schritt Hands-on
-- `further-reading.md`: offizielle Docs und gute Beispiele
+## Grundhaltung
 
-## Schnellstart für Teilnehmende
+Dieser Workshop ist kein Prompt-Museum. Alles hier ist so gebaut, dass Teilnehmende direkt mit ihrem eigenen Agenten an realistischen Aufgaben arbeiten können.
 
-1. Dieses Repo klonen oder lokal öffnen.
-2. Einen Agent-Harness wählen: Codex, Claude Code, GitHub Copilot, Cursor, Cline, Windsurf oder ähnlich.
-3. Warm-up testen:
-
-```bash
-python -m unittest discover -s playground/tiny-issue-tracker/tests
-```
-
-4. Greenfield-Track lesen:
-
-```text
-resources/greenfield-puzzle-game.md
-```
-
-5. Realprojekt-Track vorbereiten:
-
-```bash
-git clone https://github.com/whiteducksoftware/flock.git
-cd flock
-git checkout lecture/timer-precision-bug-start
-uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q
-```
-
-6. Mit Modul 01 starten. Ab Modul 05 werden Greenfield Puzzle und Flock bewusst verglichen.
-
-Optional während der gesamten Session mitführen:
-
-```text
-resources/workbook.md
-resources/agent-failure-modes.md
-```
-
-## Haltung
-
-Dieser Kurs ist kein Prompt-Museum. Alles hier ist so gebaut, dass Studierende direkt mit einem echten Agenten arbeiten können.
-
-Die Grundregel:
-
-> Ein Agent ist kein Orakel. Ein Agent ist ein sehr schneller Mitarbeiter mit unvollständigem Situationsbewusstsein. Deine Aufgabe ist, die Situation so zu bauen, dass gute Arbeit wahrscheinlicher wird.
+> **Die Grundregel:** Ein Agent ist kein Orakel. Ein Agent ist ein sehr schneller Mitarbeiter mit unvollständigem Situationsbewusstsein. Deine Aufgabe ist es, die Situation so zu bauen, dass gute Arbeit wahrscheinlicher wird.
 
 ## Quellenbasis
 
-Die Inhalte wurden aus drei Richtungen gebaut:
-
-- aktuelle offizielle Docs von OpenAI Codex, Anthropic Claude Code, GitHub Copilot, MCP und Agent Skills
-- lokale Research-Artefakte aus `spec-compare-codex` und `cc-ecosystem`
-- Vorgabe, den "aha!"-Charakter von Projekten wie `JuliusBrussee/caveman` ernst zu nehmen: kleine Form, großer Effekt
-
-Siehe [resources/research-notes.md](resources/research-notes.md) für die belegten Quellen.
+Siehe [resources/research-notes.md](resources/research-notes.md) für die belegten offiziellen Quellen (OpenAI Codex, Anthropic Claude Code, GitHub Copilot, MCP, Agent Skills).

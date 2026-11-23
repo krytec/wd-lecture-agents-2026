@@ -44,7 +44,7 @@ Beispiel:
 
 ```text
 Done when:
-uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q passes.
+python3 -m unittest discover -s playground/incident-triage-hub/tests -v passes.
 Final answer must include changed files and any unverified assumptions.
 ```
 

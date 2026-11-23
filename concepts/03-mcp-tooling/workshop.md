@@ -10,13 +10,13 @@ Du entscheidest für ein Szenario, ob MCP sinnvoll ist, und entwirfst eine siche
 
 ## Szenario
 
-Du willst, dass ein Coding Agent einen Flock-Bug aus einem GitHub-Issue oder PR-Kontext nachvollzieht. Er braucht:
+Du willst, dass ein Coding Agent einen Bug oder Feature-Request im `Incident Triage Hub` aus einem Ticket-System (GitHub Issues / Jira / Linear) nachvollzieht und die lokale Web-UI prüft. Er braucht:
 
-- den aktuellen Issue
-- Repo-Dateien
+- das aktuelle Ticket / die User Story
+- Repo-Dateien (`playground/incident-triage-hub/`)
 - Testbefehle
-- vielleicht den Lösungs-PR zum späteren Vergleich
-- vielleicht PR-Erstellung
+- einen Blick auf die laufende lokale Web-UI (`http://127.0.0.1:8080`)
+- vielleicht später die PR-Erstellung
 
 ## Schritt 1: Kontext klassifizieren
 
@@ -27,7 +27,7 @@ Füllen:
 | Repo-Code | lokal | ja | eher nein, Host kann Dateien lesen |
 | Testbefehl | Repo-Doku | selten | nein, gehört in Instructions |
 | Issue Beschreibung | GitHub/Linear/Jira | ja | ja |
-| Lösungs-PR | GitHub | ja | ja, aber erst nach eigener Diagnose |
+| Lösungs-Referenz / PR | GitHub / GitLab | ja | ja, aber erst nach eigener Diagnose |
 | Browser-Zustand | laufende App | ja | ja, wenn UI relevant |
 | Coding Style | Repo-Regel | selten | nein, Instructions/Skill |
 
@@ -64,9 +64,8 @@ Wie erkenne ich falsche oder bösartige Tool-Ausgaben?
 
 ```text
 You may use MCP tools only for:
-- reading the issue
-- reading PR #412 after your own diagnosis
-- reproducing the UI if needed
+- reading the issue / ticket context
+- inspecting the local UI at http://127.0.0.1:8080 (read-only)
 
 Do not use MCP tools to write, close, delete, or publish anything unless I explicitly approve.
 Before using a tool, say which tool you plan to use and why.

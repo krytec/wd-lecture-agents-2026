@@ -27,9 +27,13 @@ Frage:
 
 ## Schritt 2: Tests ausführen
 
+Für das lokale Praxisprojekt (`incident-triage-hub`):
+
 ```bash
-uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q
+python3 -m unittest discover -s playground/incident-triage-hub/tests -v
 ```
+
+*(Oder für das Warm-up: `python3 -m unittest discover -s playground/tiny-issue-tracker/tests`.)*
 
 Wenn der Agent sagt "tests pass", aber du keinen Output gesehen hast, zählt es nicht.
 

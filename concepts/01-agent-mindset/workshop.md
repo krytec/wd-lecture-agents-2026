@@ -2,7 +2,9 @@
 
 ## Ziel
 
-Du wandelst einen schlechten Agent-Auftrag in einen robusten Arbeitsauftrag um. Erst am kleinen Playground, dann am echten Flock-Bug.
+Du wandelst einen schlechten Agent-Auftrag in einen robusten Arbeitsauftrag um:
+1. Zuerst als schneller 5-Minuten-Fix am kleinen Warm-up (`playground/tiny-issue-tracker`).
+2. Danach als **Read-Only Diagnose** am größeren Praxisprojekt (`playground/incident-triage-hub`) — noch **ohne** zu editieren, damit die Bugs für die späteren Module und den Mini-Hackathon erhalten bleiben.
 
 ## Dauer
 
@@ -13,7 +15,8 @@ Du wandelst einen schlechten Agent-Auftrag in einen robusten Arbeitsauftrag um. 
 Vom Repo-Root:
 
 ```bash
-python -m unittest discover -s playground/tiny-issue-tracker/tests
+python3 -m unittest discover -s playground/tiny-issue-tracker/tests
+python3 -m unittest discover -s playground/incident-triage-hub/tests -v
 ```
 
 Die Tests dürfen fehlschlagen. Das ist Arbeitsmaterial.
@@ -26,17 +29,6 @@ resources/workbook.md
 
 Es ist die gemeinsame Arbeitsfläche für Agent Contract, Mini-Spec, Verification Evidence und Handoff.
 
-Für den Realprojekt-Track:
-
-```bash
-git clone https://github.com/whiteducksoftware/flock.git
-cd flock
-git checkout lecture/timer-precision-bug-start
-uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q
-```
-
-Der Flock-Test muss fehlschlagen. Das ist der eigentliche Arbeitsfall.
-
 ## Schritt 1: Schlechten Prompt bewusst ausprobieren
 
 Gib deinem Agenten:
@@ -47,47 +39,58 @@ Fix the failing tests.
 
 Beobachte:
 
-- Fragt der Agent nach dem richtigen Ordner?
-- Liest er die Tests?
+- Fragt der Agent nach dem richtigen Ordner (`tiny-issue-tracker` vs. `incident-triage-hub`)?
+- Liest er die Tests zuerst?
 - Macht er zu große Änderungen?
 - Nennt er den Verifikationsbefehl?
 
-Stoppe den Agenten, wenn er zu viel driftet.
+Stoppe den Agenten, wenn er zu viel driftet (und setze versehentliche Edits mit `git checkout -- playground/` zurück).
 
-## Schritt 2: Agent Contract schreiben
+## Schritt 2: Erster Agent Contract am Warm-up (`tiny-issue-tracker`)
 
-Kopiere und fülle aus:
+Kopiere und führe aus:
 
 ```text
 Goal:
-Fix the failing timer precision regression on the current Flock branch.
+Fix the failing test in playground/tiny-issue-tracker.
 
 Context:
-Read AGENTS.md, README.md,
-src/flock/components/orchestrator/scheduling/timer.py,
-and tests/test_timer_component.py first.
+Read playground/tiny-issue-tracker/README.md,
+playground/tiny-issue-tracker/issue_tracker.py,
+and playground/tiny-issue-tracker/tests/test_issue_tracker.py first.
 
 Constraints:
-Do not read PR #412 before diagnosing.
-Do not change the regression test unless it is demonstrably wrong.
-Keep the fix scoped to timer scheduling.
-Do not add dependencies.
+Do not read SOLUTION.md before diagnosing.
+Do not change existing tests.
+Do not add external dependencies.
 
 Done when:
-uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q passes.
+python3 -m unittest discover -s playground/tiny-issue-tracker/tests passes.
 
 Work style:
-Read first. Explain likely causes. Then edit. Report exact verification.
+Read first. Explain the root cause in two sentences. Then make the smallest fix and report exact verification.
 ```
 
-## Schritt 3: Agent arbeiten lassen
+## Schritt 3: Read-Only Diagnose am Praxisprojekt (`incident-triage-hub`)
 
-Führe den Contract in deinem Harness aus.
-
-Wenn dein Harness Plan Mode hat, nutze ihn. Wenn nicht, schreibe dazu:
+Für das größere Projekt üben wir jetzt das Wichtigste vor jedem Edit: **Read-Only Scouting mit klarem Contract**.
 
 ```text
-Before editing, show a short plan.
+Goal:
+Diagnose why 4 tests fail in playground/incident-triage-hub without editing any files yet.
+
+Context:
+Read playground/incident-triage-hub/README.md,
+playground/incident-triage-hub/triage/models.py,
+playground/incident-triage-hub/triage/rules.py,
+and playground/incident-triage-hub/tests/test_rules.py.
+
+Constraints:
+Do not edit any files yet.
+Do not read SOLUTION.md.
+
+Done when:
+You list the 3 root causes in triage/rules.py with exact line references and propose the smallest fix for each.
 ```
 
 ## Schritt 4: Mini-Retro

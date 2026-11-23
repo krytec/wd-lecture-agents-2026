@@ -34,42 +34,43 @@ Return:
 Use file references and line numbers where possible.
 ```
 
-## 3. Spec-First Feature Prompt
+## 3. SDD Step 1 — Repo-Lokale Spec erstellen (Specify)
 
 ```text
-Before implementation, write a concise spec:
-- user story
-- current behavior
-- desired behavior
-- non-goals
-- acceptance criteria
-- edge cases
+We are using Spec-Driven Development (SDD).
+Do not edit any production code or test files yet.
 
-After the spec, propose an implementation plan.
-Do not edit code until the spec and plan are coherent.
+1. Explore the relevant files for <problem or feature>.
+2. Create a concise spec file at <path, e.g. playground/incident-triage-hub/specs/001-change.md> including:
+   - problem & current behavior
+   - desired behavior
+   - explicit non-goals
+   - testable acceptance criteria & edge cases
+   - 3-step implementation plan (exact files to change vs. files not to touch)
+   - exact verification command(s)
+
+Keep it under 250 words and wait for my review.
 ```
 
-## 4. Ralph Loop Prompt
+## 4. SDD Step 2 — Plan Lock & Execute (Plan Mode)
 
 ```text
-Use this loop:
-Read: inspect only the necessary files and command output.
-Ask: ask at most one blocking question if needed.
-Lock: restate scope, non-goals, and done criteria.
-Produce: make the smallest useful change.
-Halt: stop after verification and show exact evidence.
+Read the approved spec at <path to spec.md>.
+1. Plan Lock: If there is a true blocker, ask at most ONE question; otherwise restate the locked 3-step plan and wait for confirmation.
+2. Execute: Once confirmed, implement only the locked scope — respect all non-goals.
+3. Halt: Run the verification command from the spec, stop immediately, and report changed files, exact test output, and residual risk.
 ```
 
-## 5. Verification Prompt
+## 5. SDD Step 3 — Unabhängiges Spec-Audit (Verify)
 
 ```text
-Review your own work before declaring done.
-Check:
-- Does the diff match the request?
-- Did any unrelated file change?
-- Which test or command proves the behavior?
-- What remains unverified?
-Lead with risks, not reassurance.
+Act as a skeptical reviewer. Do not edit any files.
+Audit the current git diff and test output against <path to spec.md>:
+- Which acceptance criteria are proven by tests?
+- Were any non-goals violated or unrelated files touched?
+- Were any existing tests weakened?
+- What edge cases or risks remain unverified?
+Lead with findings, not reassurance.
 ```
 
 ## 6. Skill Extraction Prompt
@@ -85,29 +86,47 @@ Create:
 Keep it focused on one job.
 ```
 
-## 7. Flock Bug Branch Prompt
+## 7. Incident Triage Hub — Bugfix Contract (Track A)
 
 ```text
 Goal:
-Fix the failing timer precision regression on the current Flock branch.
+Fix the failing tests in playground/incident-triage-hub.
 
 Context:
-Read AGENTS.md, README.md,
-src/flock/components/orchestrator/scheduling/timer.py,
-and tests/test_timer_component.py first.
+Read playground/incident-triage-hub/README.md,
+playground/incident-triage-hub/triage/models.py,
+playground/incident-triage-hub/triage/rules.py,
+and playground/incident-triage-hub/tests/test_rules.py first.
 
 Constraints:
-Do not read PR #412 before diagnosing.
-Do not change the regression test unless it is demonstrably wrong.
-Keep the fix scoped to timer scheduling.
-Do not add dependencies.
+Do not read SOLUTION.md before diagnosing.
+Do not change or weaken existing tests.
+Keep the fix scoped to playground/incident-triage-hub/triage/rules.py.
+Do not add external dependencies.
 
 Done when:
-uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q passes.
+python3 -m unittest discover -s playground/incident-triage-hub/tests -v passes.
 
 Work style:
-Read first. Explain likely root cause. Propose a short plan. Then edit.
-Report exact verification and changed files.
+Read first. Explain the root causes. Propose a short plan. Then edit.
+Report exact verification output and changed files.
+```
+
+## 7b. Incident Triage Hub — Spec-First Feature (Track B)
+
+```text
+We want to implement one feature from playground/incident-triage-hub/BACKLOG.md:
+<Name des Backlog-Items, z.B. "4. On-Call Handover Report" oder "5. Eskalations-Warnung (Near Breach)">
+
+Do not edit any files yet.
+First inspect playground/incident-triage-hub/README.md, triage/models.py, triage/rules.py, and cli.py.
+Then write a compact mini-spec (under 250 words):
+- problem & desired behavior
+- explicit non-goals (no external dependencies, keep existing CLI/API working)
+- acceptance criteria & edge cases
+- exact verification command(s)
+
+Wait for my confirmation before proposing the 3-step plan and writing code.
 ```
 
 ## 8. Greenfield Puzzle PRD Prompt

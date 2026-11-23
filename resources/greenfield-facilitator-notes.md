@@ -4,7 +4,7 @@ Diese Notizen sind für die Person vorne im Raum.
 
 ## Warum diese Übung existiert
 
-Der Flock-Bug ist Brownfield: Die Wahrheit liegt im bestehenden Repo.
+Der `incident-triage-hub` ist Brownfield: Die Wahrheit liegt im bestehenden Code und den Tests.
 
 Das Puzzle-Spiel ist Greenfield: Die Wahrheit muss erst gebaut werden. Genau dort passieren typische Agentenfehler:
 
@@ -16,22 +16,20 @@ Das Puzzle-Spiel ist Greenfield: Die Wahrheit muss erst gebaut werden. Genau dor
 
 ## Empfohlene Position im Ablauf
 
-Kurzform für 4 Stunden:
+Kurzform für den Workshop:
 
-- Modul 05: Greenfield PRD + Mechanics Spec als Hauptübung
-- Modul 06: Ralph Loop auf erster Implementierungsscheibe
-- Flock danach als Brownfield-Kontrast oder umgekehrt, je nach Gruppe
+- Modul 05: Greenfield PRD + Mechanics Spec im Kontrast zur Brownfield-Spec am `incident-triage-hub`
+- Modul 06 / Mini-Hackathon Track D: SDD Execution Loop (`Plan Lock -> Execute -> Verify`) auf erster Implementierungsscheibe
 
 Wenn wenig Zeit bleibt:
 
 - Nur Konzeptoptionen, PRD und erste Slice machen
-- Nicht implementieren
+- Implementierung am `incident-triage-hub` durchführen
 
 Wenn die Gruppe stark ist:
 
-- Eine echte erste Slice bauen lassen
+- Im Mini-Hackathon (Track D) eine echte erste Slice bauen lassen
 - Playwright-Test oder Browser-MCP-Check wirklich ausführen
-- Danach Flock-Bug als "jetzt dasselbe in fremder Codebase" nutzen
 
 ## Gute Puzzle-Kandidaten
 

@@ -46,36 +46,37 @@ Erstelle in einer Scratch-Datei oder direkt im Prompt:
 
 ## Project Shape
 
-- This task runs in the Flock repo.
-- Flock is a Python 3.12+ project managed with uv.
-- The current exercise branch is `lecture/timer-precision-bug-start`.
-- The failing behavior lives in timer scheduling.
+- This task runs in `playground/incident-triage-hub/`.
+- Zero external dependencies (Python 3.9+ Standard Library only).
+- Business rules live in `triage/rules.py`; data model in `triage/models.py`.
 
 ## Work Rules
 
-- Read `AGENTS.md`, `README.md`, the relevant implementation file, and the failing test before editing.
-- Keep changes scoped to timer scheduling.
-- Do not read PR #412 before diagnosing.
-- Do not add dependencies.
+- Read `README.md`, `triage/models.py`, `triage/rules.py`, and `tests/test_rules.py` before editing.
+- Keep changes scoped to `triage/rules.py` unless a spec requires otherwise.
+- Do not read `SOLUTION.md` before diagnosing.
+- Do not add dependencies or weaken existing tests.
 - Before saying done, run:
-  `uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q`
+  `python3 -m unittest discover -s playground/incident-triage-hub/tests -v`
 
 ## Done Means
 
-- Tests pass, or the exact blocker is reported.
+- All tests pass, or the exact blocker is reported.
 - The final answer names changed files and verification evidence.
 ```
 
-## Schritt 4: Agent damit arbeiten lassen
+Vergleiche deinen Entwurf auch mit der [AGENTS.md](../../AGENTS.md) im Repo-Root.
 
-Gib deinem Agenten zuerst die Instruktionen, dann den Auftrag:
+## Schritt 4: Agent damit arbeiten lassen (Read-Only Plan-Test)
+
+Gib deinem Agenten zuerst die Instruktionen, dann den Auftrag (noch als Plan ohne Datei-Edits, damit wir das Projekt in Modul 05/06 bzw. im Mini-Hackathon mit Spec umsetzen können):
 
 ```text
 Use the following agent instructions for this task:
 
 <paste mini instructions>
 
-Task: Fix the failing Flock timer precision regression.
+Task: Read the relevant files in playground/incident-triage-hub and propose a 3-step plan to fix the failing tests. Do not edit files yet.
 ```
 
 ## Schritt 5: Scope-Check

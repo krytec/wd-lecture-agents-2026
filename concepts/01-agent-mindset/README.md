@@ -51,7 +51,7 @@ Die wichtigste Nutzerfähigkeit ist deshalb nicht "prompt magic", sondern Aufgab
 
 ## Live-Demo
 
-Zeige denselben Flock-Bug mit zwei Prompts.
+Zeige denselben Bug im lokalen Praxisprojekt mit zwei Prompts.
 
 Schlecht:
 
@@ -62,11 +62,11 @@ Fix the failing test.
 Besser:
 
 ```text
-Goal: Fix the failing Flock timer precision regression.
-Context: Read AGENTS.md, README.md, timer.py, and tests/test_timer_component.py first.
-Constraints: Do not read PR #412 before diagnosing. Do not change the regression test unless it is wrong.
-Done when: uv run pytest tests/test_timer_component.py::TestTimerStateTracking::test_calculate_next_fire_time_same_second_with_microseconds -q passes.
-Work style: Read first, explain the likely cause, then make the smallest change.
+Goal: Diagnose and fix the failing tests in playground/incident-triage-hub.
+Context: Read playground/incident-triage-hub/README.md, triage/models.py, triage/rules.py, and tests/test_rules.py first.
+Constraints: Do not read SOLUTION.md. Do not change existing tests unless they are wrong. Keep changes scoped to triage/rules.py.
+Done when: python3 -m unittest discover -s playground/incident-triage-hub/tests -v passes.
+Work style: Read first, explain the likely causes, then make the smallest change.
 ```
 
 Die Aha-Frage:
