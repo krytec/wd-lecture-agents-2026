@@ -52,12 +52,12 @@ Do not edit any production code or test files yet.
 Keep it under 250 words and wait for my review.
 ```
 
-## 4. SDD Step 2 — Plan Lock & Execute (Plan Mode)
+## 4. SDD Step 2 — Plan & Execute (Plan Mode)
 
 ```text
 Read the approved spec at <path to spec.md>.
-1. Plan Lock: If there is a true blocker, ask at most ONE question; otherwise restate the locked 3-step plan and wait for confirmation.
-2. Execute: Once confirmed, implement only the locked scope — respect all non-goals.
+1. Plan: If there is a true blocker, ask at most ONE question; otherwise restate the 3-step plan and wait for confirmation.
+2. Execute: Once confirmed, implement only the approved scope — respect all non-goals.
 3. Halt: Run the verification command from the spec, stop immediately, and report changed files, exact test output, and residual risk.
 ```
 

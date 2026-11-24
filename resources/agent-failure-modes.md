@@ -226,6 +226,27 @@ Write PRD, mechanics spec, test plan, first slice, and non-goals.
 Only then implement the locked slice.
 ```
 
+## 11. Der Agent greift ungefragt vor (Over-Eagerness)
+
+Signal:
+
+- Du fragst nur nach der Testausgabe oder einem Read-Only-Überblick, und der Agent liefert ungefragt die komplette Diagnose oder fertige Lösung mit.
+- Im Lern- oder Review-Kontext nimmt der Agent eigene Entscheidungen vorweg.
+
+Risiko:
+
+```text
+Antwort-Scope wächst unkontrolliert; eigene Diagnose- und Lernmomente gehen verloren.
+```
+
+Intervention:
+
+```text
+Return only what I asked for (e.g., exact test output).
+Do not diagnose root causes or propose fixes yet.
+Wait for my next instruction.
+```
+
 ## Abschluss-Rubrik
 
 Ein Agentenlauf ist gesund, wenn diese Fragen mit Ja beantwortet werden können:

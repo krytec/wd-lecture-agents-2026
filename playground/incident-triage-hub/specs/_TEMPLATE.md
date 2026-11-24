@@ -21,7 +21,7 @@ Woran erkennen Mensch und Agent eindeutig, dass die Anforderung erfüllt ist?
 - [ ] Kriterium 2: ...
 - [ ] Edge Case: ...
 
-## 5. Implementation Plan (Plan Lock — max. 3 Schritte)
+## 5. Implementation Plan (max. 3 Schritte)
 *Erst nach Freigabe dieses Plans darf Code editiert werden.*
 1. Dateien, die geändert werden: `...`
 2. Neue/angepasste Tests: `...`

@@ -16,7 +16,7 @@ Sie üben:
 - PRD, Mechanics Spec und Non-goals zu schreiben
 - "production ready" als konkrete Gates zu definieren
 - Tests vor der Implementierung zu planen
-- eine erste Slice mit dem SDD Execution Loop (`Specify -> Plan Lock -> Execute -> Verify`) zu bauen
+- eine erste Slice mit dem SDD Execution Loop (`Specify -> Plan -> Execute -> Verify`) zu bauen
 - Browser-Automation als Beweis einzuplanen
 
 ## Ausgangsprompt
@@ -165,12 +165,12 @@ Follow the SDD Execution Loop for the first implementation slice.
 Read the approved PRD, mechanics spec, and test plan. Do not edit yet.
 Ask at most one blocking question. If none is needed, say "No blocker".
 
-2. Plan Lock:
+2. Plan:
 Restate the exact first slice, non-goals, files to create, and done criteria.
 Wait for confirmation before creating or editing code files.
 
 3. Execute:
-Once confirmed, implement only the locked slice. Write tests. Run unit tests, build, and browser automation.
+Once confirmed, implement only the approved slice. Write tests. Run unit tests, build, and browser automation.
 
 4. Verify & Halt:
 Stop after verification. Report changed files, commands run, browser evidence, and residual risk against the spec.

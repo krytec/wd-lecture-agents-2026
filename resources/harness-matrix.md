@@ -12,6 +12,8 @@ Die Namen unterscheiden sich, die Konzepte sind erstaunlich stabil.
 | Hook / Automation | Codex hooks, automations | Claude Code hooks | Copilot hooks für cloud agent | Wiederholbare Event-Reaktion |
 | Spec Flow | Plan Mode, skills, external Spec Kit | Plan Mode, plugins, Spec Kit | Copilot tasks, Spec Kit, custom prompts | Von Absicht zu Spec zu Plan zu Tasks |
 
+> **Terminal- & Open-Source-Harnesses (z. B. OpenCode, pi, Cline, Gemini CLI / Antigravity):** Folgen denselben Bausteinen — dauerhafter Repo-Kontext über `AGENTS.md`, wiederholbare Methoden als `SKILL.md`, externe Tools über MCP und klare Read-Only/Plan-Schritte.
+
 ## Faustregeln
 
 - `AGENTS.md` und Verwandte: für Regeln, die fast immer gelten.

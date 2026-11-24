@@ -22,7 +22,7 @@ Du kannst alleine oder im Duo (Driver + Navigator) arbeiten. Wähle den Track, d
 - **Aufgabe:**
   1. Wähle **ein** Intermediate-Feature aus `BACKLOG.md` (z.B. *On-Call Handover Report*, *Near-Breach-Eskalation bei 80 % SLA*, *Web-UI-Filter* oder *Alert-Deduplizierung*).
   2. **Specify:** Erstelle zuerst eine Spec-Datei `playground/incident-triage-hub/specs/002-<feature>.md` nach [`specs/_TEMPLATE.md`](../playground/incident-triage-hub/specs/_TEMPLATE.md) (Problem, Desired Behavior, Non-Goals, Acceptance Criteria, 3-Schritte-Plan, Verification Command) und reviewe sie.
-  3. **Plan & Execute:** Setze das Feature nach dem **SDD Execution Loop** (`Explore -> Specify -> Plan Lock -> Execute -> Verify`) inkl. neuer Unit-Tests um.
+  3. **Plan & Execute:** Setze das Feature nach dem **SDD Execution Loop** (`Explore -> Specify -> Plan -> Execute -> Verify`) inkl. neuer Unit-Tests um.
   4. **Verify:** Lass einen Reviewer-Prompt (oder Subagent) den `git diff` gegen deine Spec-Datei prüfen und teste CLI oder Web-UI (`cli.py serve`).
 - **Done when:** Spec-Datei liegt im Repo, neue + alte Tests laufen grün, Spec-Audit zeigt keine Verletzung der Non-Goals.
 
@@ -35,7 +35,7 @@ Ideal für Teilnehmende, die nicht den ganzen Tag Produktivcode schreiben — ab
 
 ### Track D — Fast Teams / Advanced: Greenfield SDD Puzzle Slice
 - **Arbeitsfläche:** [Greenfield Puzzle Game](greenfield-puzzle-game.md) (in einem neuen Unterordner, z.B. `playground/puzzle-slice/`)
-- **Aufgabe:** Spezifiziere PRD, Mechanics Spec und Testvertrag als Markdown-Spec für ein minimalistisches Web-Puzzle-Spiel und baue die erste deterministisch testbare, im Browser spielbare Slice über den SDD Execution Loop (`Specify -> Plan Lock -> Execute -> Verify`).
+- **Aufgabe:** Spezifiziere PRD, Mechanics Spec und Testvertrag als Markdown-Spec für ein minimalistisches Web-Puzzle-Spiel und baue die erste deterministisch testbare, im Browser spielbare Slice über den SDD Execution Loop (`Specify -> Plan -> Execute -> Verify`).
 
 > **Tipp:** Falls du während der vorherigen Workshop-Module schon Dateien im Playground verändert hast, kannst du jederzeit mit `git checkout -- playground/` sauber auf den Startzustand zurücksetzen.
 
@@ -57,6 +57,6 @@ Wenn ihr den Sprint als kleinen Hackathon mit Voting oder Feedback-Runde spielt,
 | Dimension | Woran erkennt man starke Agentenführung? |
 | --- | --- |
 | **1. Auftrag & Spec** | Klares Ziel, konkrete Dateien/Kontext, explizite Non-goals statt vagem Wunsch. |
-| **2. Steuerung & Disziplin** | Read-first, Plan Lock eingehalten, Scope Creep oder vorschnelle Edits aktiv gestoppt. |
+| **2. Steuerung & Disziplin** | Read-first, Plan-Freigabe eingehalten, Scope Creep oder vorschnelle Edits aktiv gestoppt. |
 | **3. Verifikation & Ehrlichkeit** | Echte Test-/CLI-/UI-Beweise statt „looks good“, sauberer kleiner Diff, Restrisiken benannt. |
 | **4. Praxisnutzen / Reuse** | Ergebnis oder Artefakt (`AGENTS.md`, `SKILL.md`, Spec, Tests) ist direkt im Team weiterverwendbar. |

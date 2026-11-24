@@ -66,7 +66,7 @@ Nach 3–4 Stunden können Teilnehmende:
 | 00:40–01:05 | [02 Context and Instructions](concepts/02-context-and-instructions/README.md) | Was gehört dauerhaft in den Kontext? | kleines `AGENTS.md` / Contract File |
 | 01:05–01:30 | [03 MCP Tooling](concepts/03-mcp-tooling/README.md) & [04 Skills](concepts/04-agent-skills-and-plugins/README.md) | Wann Tools (MCP), wann Methoden (Skills)? | eigene `SKILL.md`-Skizze |
 | 01:30–01:45 | Pause | Kopf lüften & Track wählen | Kaffee + Team-/Track-Wahl |
-| 01:45–02:15 | [05 Spec-Driven Development](concepts/05-spec-driven-development/README.md) & [06 SDD Execution & Orchestration](concepts/06-sdd-execution-and-orchestration/README.md) | Wie steuert man Agents über Specs, Plan Mode & Subagents? | eigene Spec-Datei (`specs/*.md`) & Plan Lock |
+| 01:45–02:15 | [05 Spec-Driven Development](concepts/05-spec-driven-development/README.md) & [06 SDD Execution & Orchestration](concepts/06-sdd-execution-and-orchestration/README.md) | Wie steuert man Agents über Specs, Plan Mode & Subagents? | eigene Spec-Datei (`specs/*.md`) & Plan |
 | 02:15–02:30 | [07 Verification & Safety](concepts/07-verification-and-safety/README.md) | Wie beweist man Qualität & schützt interne Daten? | Spec-Audit & Verifikations-Checkliste |
 | 02:30–03:25 | **Mini-Hackathon Sprint (55 Min)** | SDD End-to-End am [Incident Triage Hub](playground/incident-triage-hub/README.md) (Tracks A–D) | Spec + geprüfter Fix, Feature, Tests oder Skill |
 | 03:25–03:50 | **Show & Tell (3 Min/Team)** | Was hat funktioniert, welcher Fehler wurde gestoppt? | Demo + kurzes Feedback nach Rubrik |

@@ -68,6 +68,8 @@ def check_optional_tools() -> None:
     agents = {
         "claude": "Claude Code CLI",
         "codex": "OpenAI Codex CLI",
+        "opencode": "OpenCode CLI",
+        "pi": "pi Coding Agent",
         "gh": "GitHub CLI (Copilot)",
         "gemini": "Gemini CLI",
         "agy": "Antigravity CLI",

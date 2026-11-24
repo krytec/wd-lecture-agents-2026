@@ -45,7 +45,7 @@ Der Greenfield-Track braucht kein vorbereitetes Repo. Teilnehmende können in ei
 Damit Teilnehmende nicht schon in Modul 01 die Bugs des Hauptprojekts wegfixen, sind die Übungen bewusst gestaffelt:
 1. **Modul 01 (Mindset):** Kurzer Bugfix am `playground/tiny-issue-tracker` (5–10 Min) + erste **Read-Only** Diagnose am `playground/incident-triage-hub`.
 2. **Modul 02–04 (Context, MCP, Skills):** `AGENTS.md` entwerfen und `repo-cartographer` (Read-Only Mapping!) auf `playground/incident-triage-hub` anwenden — **noch ohne Edits**.
-3. **Modul 05–07 & Mini-Hackathon:** Erst jetzt wird `playground/incident-triage-hub` nach dem **Spec-Driven Development (SDD)**-Prinzip verändert (zuerst Spec-Datei in `specs/*.md` anlegen, Plan locken, dann Track A Bugfix oder Track B/C Feature/Test-Suite aus `BACKLOG.md` umsetzen; Track D: `Greenfield Puzzle Game`).
+3. **Modul 05–07 & Mini-Hackathon:** Erst jetzt wird `playground/incident-triage-hub` nach dem **Spec-Driven Development (SDD)**-Prinzip verändert (zuerst Spec-Datei in `specs/*.md` anlegen, Planen, dann Track A Bugfix oder Track B/C Feature/Test-Suite aus `BACKLOG.md` umsetzen; Track D: `Greenfield Puzzle Game`).
 4. **Schneller Reset jederzeit möglich:** `git checkout -- playground/` setzt beide Playgrounds sofort in den Startzustand zurück.
 
 Optional für die Industrie-Workflow-Labs:
@@ -97,13 +97,13 @@ Die Aha-Antwort: Es ist Team-Wissen als portable, agent-native Verpackung.
 An die Tafel:
 
 ```text
-Explore -> Specify (specs/*.md) -> Plan Lock -> Execute -> Verify gegen Spec
+Explore -> Specify (specs/*.md) -> Plan -> Execute -> Verify gegen Spec
 ```
 
 Dann mit einem Agenten live anwenden (oder an [`playground/incident-triage-hub/specs/EXAMPLE-near-breach-warning.md`](../playground/incident-triage-hub/specs/EXAMPLE-near-breach-warning.md) zeigen):
 
 - **Explore & Specify:** Relevante Dateien lesen lassen und eine 25-zeilige Spec-Datei in `specs/` anlegen (45 Sekunden menschliches Review statt 30 Minuten Code-Review!).
-- **Plan Lock:** Im Plan Mode max. 3 Schritte + betroffene Dateien festlegen und abnicken.
+- **Plan:** Im Plan Mode max. 3 Schritte + betroffene Dateien festlegen und abnicken.
 - **Execute:** Nur die freigegebene Slice bauen und Tests ausführen.
 - **Verify:** In einer zweiten Rolle (Reviewer / Subagent) `git diff` streng gegen die Spec-Datei prüfen.
 

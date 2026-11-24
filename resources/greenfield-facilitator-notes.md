@@ -19,7 +19,7 @@ Das Puzzle-Spiel ist Greenfield: Die Wahrheit muss erst gebaut werden. Genau dor
 Kurzform für den Workshop:
 
 - Modul 05: Greenfield PRD + Mechanics Spec im Kontrast zur Brownfield-Spec am `incident-triage-hub`
-- Modul 06 / Mini-Hackathon Track D: SDD Execution Loop (`Plan Lock -> Execute -> Verify`) auf erster Implementierungsscheibe
+- Modul 06 / Mini-Hackathon Track D: SDD Execution Loop (`Plan -> Execute -> Verify`) auf erster Implementierungsscheibe
 
 Wenn wenig Zeit bleibt:
 

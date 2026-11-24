@@ -24,7 +24,7 @@ Offene Incidents (`inc.is_open == True`), die bereits **mindestens 80 %** ihrer 
 - [ ] Ein `resolved`-Incident mit `age_minutes = 25` wird **nicht** als `at_risk` gelistet.
 - [ ] `build_summary()` liefert den korrekten Integer-Wert unter `"at_risk"`.
 
-## 5. Implementation Plan (Plan Lock — max. 3 Schritte)
+## 5. Implementation Plan (max. 3 Schritte)
 1. **Regel & Summary ergänzen (`triage/rules.py`):** `find_at_risk_incidents()` implementieren, in `build_summary()` und `render_markdown_report()` einbinden.
 2. **Unit-Tests schreiben (`tests/test_rules.py`):** Tests für 79 %, 80 %, 100 %, 101 % SLA sowie `resolved`-Status ergänzen.
 3. **Unberührte Dateien:** `triage/models.py`, `triage/storage.py`, `sample_incidents.json` bleiben unverändert.

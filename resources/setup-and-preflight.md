@@ -11,9 +11,10 @@ Damit wir im Workshop keine Zeit mit Setup-Problemen verlieren, geh diese kurze 
   - Claude Code
   - OpenAI Codex
   - Cursor / Windsurf / Cline
+  - OpenCode / pi (Terminal-Harnesses)
   - Gemini CLI / Antigravity
 
-> **Kein Python-Profi?** Kein Problem! Die Playgrounds sind bewusst klein und lesbar — der Punkt ist nicht Python, sondern **wie du deinen Agenten führst**.
+> **Kein Python-Profi oder keine IDE installiert?** Kein Problem! Die Playgrounds sind bewusst klein und lesbar — und du brauchst **keine IDE**: Jedes Terminal-Harness kann dir Dateien und `git diff` direkt im Chat anzeigen. Der Punkt ist nicht Python, sondern **wie du deinen Agenten führst**.
 
 ## 2. Repo prüfen (1 Befehl)
 
@@ -49,7 +50,7 @@ Wenn dein Agent die Datei liest und den `unittest`-Befehl nennt, bist du startkl
 | Problem | Lösung |
 | --- | --- |
 | `python: command not found` (macOS/Linux) | Nutze `python3` statt `python`. |
-| `python3` fehlt unter Windows | Installiere Python 3 aus dem Microsoft Store oder via `winget install Python.Python.3.12` (oder nutze `py`). |
+| `python3` / `python` fehlt oder Windows-Store-Stub (`Python was not found` / `file cannot be accessed`) | Windows liefert oft nur einen Store-Platzhalter unter `WindowsApps\python.exe`. Installiere Python sauber via `winget install Python.Python.3.12` oder [python.org](https://www.python.org/downloads/) (*Add python.exe to PATH* anhaken) und **öffne danach ein neues Terminal** (für den `PATH`-Refresh) oder nutze `py`. |
 | Mein Agent darf keine Terminal-Befehle ausführen | Kein Blocker: lass den Agenten den Befehl vorschlagen und führe ihn selbst im Terminal aus; kopiere die Ausgabe zurück in den Chat. |
 | Firmen-Proxy / Firewall blockiert `npm` (`openspec`) oder externe Web-Suche | Ignoriere die optionalen Online-Extras — beide Haupt-Playgrounds (`tiny-issue-tracker` und `incident-triage-hub`) laufen **100 % offline ohne Downloads**. |
 | Agent editiert sofort los, obwohl ich nur eine Analyse wollte | Starte den Prompt explizit mit `Do not edit any files yet.` und nutze Plan-Mode / Ask-Mode deines Harnesses. |

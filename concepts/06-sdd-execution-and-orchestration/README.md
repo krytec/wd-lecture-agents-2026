@@ -25,12 +25,12 @@ Statt kryptischer Prompt-Rituale nutzen wir den Ablauf, den moderne Coding Agent
 
 ```text
 1. Explore & Specify  (Read-Only)  -> Codebase lesen, max. 1 Blocker-Frage stellen, Spec schreiben
-2. Plan & Lock        (Plan Mode)  -> Max. 3 Schritte + betroffene Dateien festlegen -> Mensch gibt frei
+2. Plan               (Plan Mode)  -> Max. 3 Schritte + betroffene Dateien festlegen -> Mensch gibt frei
 3. Execute            (Build)      -> Kleinste Slice exakt nach Spec implementieren + Tests ausführen
 4. Verify & Audit     (Review)     -> git diff und Test-Output unbestechlich gegen die Spec-Datei prüfen
 ```
 
-### Warum der „Plan Lock“ vor Schritt 3 entscheidend ist
+### Warum die Plan-Freigabe vor Schritt 3 entscheidend ist
 
 Zwischen **Plan** und **Execute** liegt ein bewusster kurzer Stopp:
 - Welche Dateien werden angefasst?
@@ -55,7 +55,7 @@ Ein einzelner Chat-Verlauf wird schnell betriebsblind. Da unsere **Spec als Date
 | Phase | Brownfield (`incident-triage-hub`) | Greenfield (`Puzzle Game`) |
 | --- | --- | --- |
 | **1. Explore & Specify** | `AGENTS.md`, bestehenden Code & rote Tests lesen -> Bug-/Feature-Spec in `specs/` | Produktwunsch klären -> PRD, Mechanics Spec & Testvertrag als Datei anlegen |
-| **2. Plan & Lock** | Exakte Änderungsstellen (z.B. nur `triage/rules.py` + `tests/test_rules.py`) locken | Erste spielbare Slice (Logik getrennt von UI, deterministischer Seed) locken |
+| **2. Plan** | Exakte Änderungsstellen (z.B. nur `triage/rules.py` + `tests/test_rules.py`) festlegen | Erste spielbare Slice (Logik getrennt von UI, deterministischer Seed) planen |
 | **3. Execute** | Kleinster Fix oder Feature-Slice + Unit-Tests | Erste Slice implementieren + Unit- & UI-Checks |
 | **4. Verify & Audit** | `git diff` + `unittest`-Output gegen `specs/*.md` prüfen | Production-Ready Gates + Browser-Check gegen PRD prüfen |
 

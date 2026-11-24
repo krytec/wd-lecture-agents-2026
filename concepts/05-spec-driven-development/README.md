@@ -18,7 +18,7 @@ Vage Idee -> Agent generiert viel Code -> Mensch entdeckt Missverständnis -> Pa
 Mit SDD arbeitet das Team in einer klaren Kette:
 
 ```text
-Explore -> Specify (Datei im Repo) -> Plan Lock -> Execute -> Verify gegen Spec
+Explore -> Specify (Datei im Repo) -> Plan -> Execute -> Verify gegen Spec
 ```
 
 Das ist kein bürokratischer Papierkram, sondern **Drift-Kontrolle** und die gemeinsame Sprache zwischen **Engineering, QA, DevOps und Produkt/PM**.
@@ -42,7 +42,7 @@ Siehe unsere Vorlage [playground/incident-triage-hub/specs/_TEMPLATE.md](../../p
 2. **Desired Behavior:** Welches beobachtbare Verhalten wollen wir stattdessen?
 3. **Explicit Non-Goals:** Was lassen wir bewusst weg? (Der wichtigste Schutz gegen Scope Creep!)
 4. **Acceptance Criteria & Edge Cases:** Konkrete, testbare Bedingungen (inkl. Grenzfälle).
-5. **Implementation Plan (Plan Lock):** Max. 3 Schritte + welche Dateien geändert werden (und welche *nicht*).
+5. **Implementation Plan (Plan Mode):** Max. 3 Schritte + welche Dateien geändert werden (und welche *nicht*).
 6. **Verification Command(s):** Exakter Befehl, der den Erfolg beweist.
 
 Im Workshop unterscheiden wir zwei SDD-Szenarien:

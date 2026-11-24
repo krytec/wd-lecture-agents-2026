@@ -27,12 +27,12 @@ Fill the relevant sections as you work:
 2. Agent Contract
 3. Read-Only Map
 4. Mini-Spec
-5. Plan Lock
+5. Plan (mit Freigabe)
 6. Implementation Notes
 7. Verification Evidence
 8. Final Handoff
 
-Do not implement before the Plan Lock.
+Do not implement before the plan is approved.
 Do not claim completion without Verification Evidence.
 ```
 
@@ -139,7 +139,7 @@ Spec-Check:
 - Sind Acceptance Criteria testbar?
 - Passt der Verifikationsbefehl wirklich zur Änderung?
 
-## 5. Plan Lock
+## 5. Plan (mit Freigabe)
 
 ```text
 Approved scope:
@@ -155,7 +155,7 @@ Implementation steps, max 3:
 Stop condition:
 ```
 
-Erst nach diesem Lock darf der Agent implementieren.
+Erst nach Freigabe dieses Plans darf der Agent implementieren.
 
 ## 6. Implementation Notes
 

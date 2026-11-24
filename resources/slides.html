@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Coding Agents — Praxis-Workshop &amp; Mini-Hackathon</title>
+  <style>
+    :root {
+      --bg: #090b10;
+      --surface: #111520;
+      --surface-subtle: #161b29;
+      --border: #232a3b;
+      --border-strong: #323c54;
+      --text: #f3f5fa;
+      --muted: #98a2b8;
+      --accent: #7c9cff;
+      --accent-soft: rgba(124, 156, 255, 0.12);
+      --ok: #4ade80;
+      --ok-soft: rgba(74, 222, 128, 0.1);
+      --err: #f87171;
+      --err-soft: rgba(248, 113, 113, 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 6vh 6vw 10vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: fadeIn 140ms ease-out;
+    }
+
+    .inner {
+      width: 100%;
+      max-width: 1120px;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .kicker {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.12rem;
+      font-weight: 650;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    p, li {
+      margin: 0;
+      font-size: clamp(1rem, 1.35vw, 1.2rem);
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    strong { color: var(--text); font-weight: 600; }
+
+    .lead {
+      font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+      color: #c7d0e2;
+      max-width: 56ch;
+      line-height: 1.45;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: #dbe4ff;
+      padding: 0.1em 0.4em;
+      border-radius: 5px;
+      font-size: 0.88em;
+    }
+
+    pre {
+      margin: 0;
+      background: #0d1018;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: clamp(0.88rem, 1.1vw, 1rem);
+      line-height: 1.55;
+      color: #e2e8f8;
+      overflow-x: auto;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.3rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .card.good {
+      border-color: rgba(74, 222, 128, 0.35);
+      background: linear-gradient(180deg, var(--ok-soft), var(--surface) 45%);
+    }
+
+    .card.bad {
+      border-color: rgba(248, 113, 113, 0.35);
+      background: linear-gradient(180deg, var(--err-soft), var(--surface) 45%);
+    }
+
+    .label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .label.good { color: var(--ok); }
+    .label.bad  { color: var(--err); }
+
+    /* Architecture Stack (Slide 2) */
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .layer {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .layer-head {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      border-right: 1px solid var(--border);
+      padding-right: 1.25rem;
+    }
+
+    .layer-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .layer-role {
+      font-size: 0.88rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* Flow (Slide 5) */
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .step-index {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .statement {
+      border-left: 3px solid var(--accent);
+      padding: 0.15rem 0 0.15rem 1.15rem;
+      font-size: clamp(1.15rem, 1.65vw, 1.45rem);
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    ul {
+      margin: 0.25rem 0 0;
+      padding-left: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .hud {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 52px;
+      padding: 0 3vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(9, 11, 16, 0.9);
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      bottom: 52px;
+      height: 2px;
+      background: var(--accent);
+      transition: width 180ms ease;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    button {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.32rem 0.7rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    button:hover { border-color: var(--border-strong); }
+
+    @media (max-width: 960px) {
+      .grid-2, .grid-3, .grid-4, .flow { grid-template-columns: 1fr; }
+      .layer { grid-template-columns: 1fr; gap: 0.6rem; }
+      .layer-head { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 0.5rem; }
+      .slide { overflow-y: auto; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+
+    <!-- Slide 1 -->
+    <section class="slide active">
+      <div class="inner">
+        <div class="kicker">Praxis-Workshop &amp; Mini-Hackathon · 3,5–4h</div>
+        <h1>AI Coding Agents<br />führen, begrenzen &amp; verifizieren</h1>
+        <p class="lead">
+          Ein Agent ist kein Orakel, sondern ein <strong>schneller Junior-Kollege mit Werkzeugen</strong> und unvollständigem Situationsbewusstsein.
+        </p>
+        <div class="grid-3">
+          <div class="card">
+            <div class="label">Pre-Flight</div>
+            <pre>python3 scripts/preflight.py</pre>
+            <p>Rote Playground-Tests am Start sind <strong>Absicht</strong>.</p>
+          </div>
+          <div class="card">
+            <div class="label">Harness-neutral</div>
+            <p>Claude Code, Codex, Copilot, OpenCode, pi, Cursor, Antigravity — funktioniert auch <strong>ohne IDE</strong>.</p>
+          </div>
+          <div class="card">
+            <div class="label">Human-in-the-Loop</div>
+            <p><strong>Auto-Approve auslassen.</strong> Die Bestätigungsabfragen sind euer Sicherheitsnetz.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2 -->
+    <section class="slide">
+      <div class="inner">
+        <div class="kicker">Akt 1 · Mentalmodell</div>
+        <h2>LLM vs. Agent vs. Harness</h2>
+        <div class="stack">
+          <div class="layer">
+            <div class="layer-head">
+              <div class="layer-name">1. LLM (Model)</div>
+              <div class="layer-role">Gehirn ohne Hände</div>
+            </div>
+            <p>Zustandslose Text-in / Text-out Engine. Kennt Dateien, Tests und Git-Historie <strong>nur</strong>, wenn sie im Kontextfenster liegen.</p>
+          </div>
+          <div class="layer">
+            <div class="layer-head">
+              <div class="layer-name">2. Agent</div>
+              <div class="layer-role">Loop + Werkzeuge</div>
+            </div>
+            <p>Schleife um das LLM: <strong>Kontext lesen → Tool aufrufen</strong> (Dateien, Edit, Shell, Suche) <strong>→ Ergebnis beobachten → wiederholen</strong>.</p>
+          </div>
+          <div class="layer">
+            <div class="layer-head">
+              <div class="layer-name">3. Harness</div>
+              <div class="layer-role">App / CLI-Runtime</div>
+            </div>
+            <p>Verwaltet <strong>Modellwahl, Permissions, Sandbox, MCP, Skills &amp; <code>AGENTS.md</code></strong> (z. B. Claude Code, Codex, OpenCode, pi, Copilot, Antigravity).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3 -->
+    <section class="slide">
+      <div class="inner">
+        <div class="kicker">Akt 2 · Agent Mindset &amp; Warm-up</div>
+        <h2>Vom vagen Einzeiler zum Agent Contract</h2>
+        <div class="grid-2">
+          <div class="card bad">
+            <div class="label bad">Vager Prompt</div>
+            <pre>Fix the failing tests.</pre>
+            <ul>
+              <li>Editiert blind oder im falschen Ordner</li>
+              <li>Schwächt manchmal Tests statt Produktionscode</li>
+              <li>Behauptet „should work“ ohne echte Testausgabe</li>
+            </ul>
+          </div>
+          <div class="card good">
+            <div class="label good">Agent Contract</div>
+            <pre>Goal:        Was ist konkret anders?
+Context:     Welche Dateien/Tests zuerst lesen?
+Constraints: Was darf NICHT passieren?
+Done when:   Exakter Testbefehl als Beweis
+Work style:  Read first. Small diff. Real output.</pre>
+          </div>
+        </div>
+        <div class="meta-bar">
+          <span><strong>Warm-up (10 Min):</strong> <code>playground/tiny-issue-tracker/</code></span>
+          <span><strong>Bonus danach:</strong> Warum besteht <code>next_issue()</code> eigentlich?</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4 -->
+    <section class="slide">
+      <div class="inner">
+        <div class="kicker">Akt 3 · Kontext-Architektur</div>
+        <h2>Die Kontext-Leiter: Wohin gehört welches Wissen?</h2>
+        <div class="grid-4">
+          <div class="card">
+            <div class="label">Immer im Repo</div>
+            <h3><code>AGENTS.md</code></h3>
+            <p>Testbefehle, Architektur-Grenzen, No-Gos. Kurz und beobachtbar.</p>
+          </div>
+          <div class="card">
+            <div class="label">Manchmal / Methode</div>
+            <h3><code>SKILL.md</code></h3>
+            <p>Wiederholbare Workflows. <strong>Progressive Disclosure</strong> spart Tokens.</p>
+          </div>
+          <div class="card">
+            <div class="label">Live extern</div>
+            <h3>MCP Server</h3>
+            <p>Externe Tools &amp; Daten (Jira, DB, Browser). <strong>Resources = Augen, Tools = Hände.</strong></p>
+          </div>
+          <div class="card">
+            <div class="label">Einmalig</div>
+            <h3>Prompt / Spec</h3>
+            <p>Konkreter Bugfix, Feature-Slice und heutige Acceptance Criteria.</p>
+          </div>
+        </div>
+        <div class="meta-bar">
+          <span><strong>Skill-Pfad:</strong> <code>.agents/skills/&lt;name&gt;/SKILL.md</code> bzw. <code>.claude/skills/</code></span>
+          <span><strong>Subagents:</strong> stark für Recherche &amp; Review — Overhead bei 5-Zeilen-Edits</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5 -->
+    <section class="slide">
+      <div class="inner">
+        <div class="kicker">Akt 4 · Spec-Driven Development</div>
+        <h2>Specs schlagen „Vibe Coding“</h2>
+        <div class="statement">
+          400 Zeilen generierten Code zu reviewen dauert <strong>30 Minuten</strong> — eine 25-Zeilen-Spec dauert <strong>45 Sekunden</strong>.
+        </div>
+        <div class="flow">
+          <div class="step">
+            <div class="step-index">01</div>
+            <h3>Explore</h3>
+            <p>Read-Only: Dateien, Flow &amp; Tests kartieren.</p>
+          </div>
+          <div class="step">
+            <div class="step-index">02</div>
+            <h3>Specify</h3>
+            <p><code>specs/*.md</code> mit Verhalten, Non-Goals &amp; Criteria.</p>
+          </div>
+          <div class="step">
+            <div class="step-index">03</div>
+            <h3>Plan</h3>
+            <p>Max. 3 Schritte + explizite Freigabe vor dem Edit.</p>
+          </div>
+          <div class="step">
+            <div class="step-index">04</div>
+            <h3>Execute</h3>
+            <p>Nur den freigegebenen Plan umsetzen + Tests laufen lassen.</p>
+          </div>
+          <div class="step">
+            <div class="step-index">05</div>
+            <h3>Verify</h3>
+            <p>Echte Testausgabe, <code>git diff</code> &amp; Audit gegen Spec.</p>
+          </div>
+        </div>
+        <div class="meta-bar">
+          <span><strong>Praxis-Tipp:</strong> Gebt dem Agenten <code>resources/workbook.md</code> — der Agent füllt es aus, ihr prüft.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6 -->
+    <section class="slide">
+      <div class="inner">
+        <div class="kicker">Akt 4 · Verification &amp; Safety</div>
+        <h2>Top-6 Failure Modes sofort stoppen</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>1. Editiert zu früh</h3>
+            <p><em>„Stop editing. Map files, flow, and tests first (read-only).“</em></p>
+          </div>
+          <div class="card">
+            <h3>2. Scope Creep</h3>
+            <p><em>„Classify changes: required vs. out-of-scope against our spec.“</em></p>
+          </div>
+          <div class="card">
+            <h3>3. Schwächt Tests ab</h3>
+            <p><em>„Revert test changes. Fix production code instead.“</em></p>
+          </div>
+          <div class="card">
+            <h3>4. „Should work“</h3>
+            <p><em>„Run the exact test command and show real output + git diff.“</em></p>
+          </div>
+          <div class="card">
+            <h3>5. Over-Eagerness</h3>
+            <p><em>„Return only what I asked for. Do not propose fixes yet.“</em></p>
+          </div>
+          <div class="card">
+            <h3>6. Secrets &amp; Injection</h3>
+            <p>Keine echten Keys/PII in Prompts; Tool-Outputs sind Daten, keine Befehle.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7 -->
+    <section class="slide">
+      <div class="inner">
+        <div class="kicker">Akt 5 · Mini-Hackathon (55 Min)</div>
+        <h2>Wähle deinen Track (Solo oder im Duo)</h2>
+        <div class="grid-2">
+          <div class="card">
+            <div class="label">Track A · Beginner</div>
+            <h3>Bugfix &amp; Agent Contract</h3>
+            <p><code>incident-triage-hub</code>: 3 Bugs in <code>triage/rules.py</code> mit <code>workbook.md</code> fixen (9/9 grün) + Bonus: eigene <code>AGENTS.md</code>.</p>
+          </div>
+          <div class="card">
+            <div class="label">Track B · Intermediate</div>
+            <h3>Spec-Driven Feature-Sprint</h3>
+            <p>1 Feature aus <code>BACKLOG.md</code> via <code>specs/002-*.md</code> → Plan → Build → Reviewer-Audit.</p>
+          </div>
+          <div class="card">
+            <div class="label">Track C · QA / PM / DevOps</div>
+            <h3>Audit, PRD oder eigene Skill</h3>
+            <p>C1: Edge-Case-Audit + 5 Tests · C2: PRD + erste Slice · C3: eigene <code>SKILL.md</code> bauen &amp; testen.</p>
+          </div>
+          <div class="card">
+            <div class="label">Track D · Erfahrene Teams</div>
+            <h3>Greenfield Puzzle Game</h3>
+            <p><code>resources/greenfield-puzzle-game.md</code>: 3 Konzepte → PRD &amp; Mechanics Spec → testbare 1. Slice im Browser.</p>
+          </div>
+        </div>
+        <div class="meta-bar">
+          <span><strong>Reset jederzeit:</strong> <code>git checkout -- playground/</code></span>
+          <span><strong>Spickzettel:</strong> <code>resources/cheatsheet.md</code></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8 -->
+    <section class="slide">
+      <div class="inner">
+        <div class="kicker">Abschluss · Show &amp; Tell (3 Min / Team)</div>
+        <h2>Es zählt der Prozess — nicht die Menge an Code</h2>
+        <div class="grid-4">
+          <div class="card">
+            <div class="label">30 Sek.</div>
+            <h3>1. Ziel &amp; Non-Goal</h3>
+            <p>Welcher Track, welches Ziel — und was wurde bewusst <strong>nicht</strong> gebaut?</p>
+          </div>
+          <div class="card">
+            <div class="label">60 Sek.</div>
+            <h3>2. Gestoppter Fehler</h3>
+            <p>Wo wollte der Agent abdriften, und wie habt ihr ihn eingefangen?</p>
+          </div>
+          <div class="card">
+            <div class="label">60 Sek.</div>
+            <h3>3. Echter Beweis</h3>
+            <p>Testausgabe, <code>git diff</code> oder kurze Demo (CLI / UI / Skill).</p>
+          </div>
+          <div class="card">
+            <div class="label">30 Sek.</div>
+            <h3>4. Takeaway</h3>
+            <p>Welche Regel nehmt ihr morgen mit in euren Alltag?</p>
+          </div>
+        </div>
+        <div class="statement">
+          <strong>Wrap-up für alle:</strong> „Ab morgen gebe ich meinem Coding Agent immer …“
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="progress" id="progress"></div>
+  <footer class="hud">
+    <div>AI Coding Agents Workshop · <code>←</code> <code>→</code> <code>Space</code> · <code>F</code> Fullscreen</div>
+    <div class="controls">
+      <button type="button" id="prevBtn" aria-label="Vorherige Folie">←</button>
+      <span id="counter">1 / 8</span>
+      <button type="button" id="nextBtn" aria-label="Nächste Folie">→</button>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      const counter = document.getElementById("counter");
+      const progress = document.getElementById("progress");
+      let index = 0;
+
+      function render() {
+        slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
+        counter.textContent = (index + 1) + " / " + slides.length;
+        progress.style.width = (((index + 1) / slides.length) * 100) + "%";
+        history.replaceState(null, "", "#" + (index + 1));
+      }
+
+      function go(delta) {
+        index = Math.max(0, Math.min(slides.length - 1, index + delta));
+        render();
+      }
+
+      const initialHash = parseInt(location.hash.replace("#", ""), 10);
+      if (!Number.isNaN(initialHash) && initialHash >= 1 && initialHash <= slides.length) {
+        index = initialHash - 1;
+      }
+
+      document.getElementById("prevBtn").addEventListener("click", () => go(-1));
+      document.getElementById("nextBtn").addEventListener("click", () => go(1));
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+          e.preventDefault();
+          go(1);
+        } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+          e.preventDefault();
+          go(-1);
+        } else if (e.key === "Home") {
+          index = 0;
+          render();
+        } else if (e.key === "End") {
+          index = slides.length - 1;
+          render();
+        } else if (e.key.toLowerCase() === "f") {
+          if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen?.();
+          } else {
+            document.exitFullscreen?.();
+          }
+        }
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>

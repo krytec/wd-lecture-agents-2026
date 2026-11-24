@@ -33,3 +33,5 @@ Done when: unittest passes and you summarize the behavior change.
 ```
 
 Wenn du festhängst, lies [SOLUTION.md](SOLUTION.md). Nicht vorher. Der kleine Schmerz gehört zum Lernmoment.
+
+> **Bonus-Check nach grünem Lauf:** Schau dir `next_issue()` in `issue_tracker.py` genau an — warum besteht `test_next_issue_uses_priority_order` eigentlich, und was passiert, sobald ein Issue mit dem Default `priority="medium"` dabei ist? *(Lernmoment: Grüne Tests beweisen nicht automatisch korrekte Fachlogik.)*

@@ -50,7 +50,7 @@ Lies die erzeugte Datei `playground/incident-triage-hub/specs/001-my-spec.md` kr
 - **Verhalten statt Wunschdenken:** Sind die Acceptance Criteria konkret testbar?
 - **Non-Goals scharf genug?** Steht klar drin, was *nicht* geändert werden darf (keine neuen Dependencies, keine Änderung an unbeteiligten Dateien)?
 - **Edge Cases bedacht?** (z.B. leere Liste, unbekannte Severity, Groß-/Kleinschreibung, `resolved` vs. `open`?)
-- **Plan Lock realistisch?** Nennt der 3-Schritte-Plan die exakten Dateien?
+- **Plan realistisch?** Nennt der 3-Schritte-Plan die exakten Dateien?
 
 Wenn etwas zu vage oder zu aufgebläht ist, lass den Agenten die Spec schärfen (oder editiere die Markdown-Datei direkt selbst!):
 

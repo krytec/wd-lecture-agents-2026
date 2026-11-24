@@ -32,8 +32,8 @@ Work style:  Read first. Propose a short plan. Keep changes small. Report exact 
 Statt „Vibe Coding“ im Endlos-Chat führst du größere Änderungen über eine **repo-lokale Spec-Datei** (`specs/*.md`) und **Plan Mode**:
 
 1. **Explore & Specify (Read-Only):** *„Read the relevant files and create `specs/001-<name>.md` (Problem, Desired Behavior, Non-Goals, Acceptance Criteria). Do not edit code yet.“*
-2. **Plan & Lock (Plan Mode):** *„Based on the approved spec, propose a 3-step execution plan (files to change, files not to touch, tests to run). Ask at most 1 blocking question. Wait for approval.“*
-3. **Execute (Build):** *„Implement only the locked plan and run the verification command. Stop immediately after.“*
+2. **Plan (Plan Mode):** *„Based on the approved spec, propose a 3-step execution plan (files to change, files not to touch, tests to run). Ask at most 1 blocking question. Wait for approval.“*
+3. **Execute (Build):** *„Implement only the approved plan and run the verification command. Stop immediately after.“*
 4. **Verify against Spec (Reviewer / Subagent):** *„Compare `git diff` and test output against `specs/001-<name>.md`. Check every acceptance criterion and non-goal.“*
 
 ---
@@ -56,3 +56,10 @@ Statt „Vibe Coding“ im Endlos-Chat führst du größere Änderungen über ei
 - [ ] **`git diff` gelesen:** Verstehe ich jede geänderte Zeile und würde ich meinen Namen unter den PR setzen?
 - [ ] **Tests echt gelaufen:** Habe ich die Testausgabe gesehen (nicht nur die Zusammenfassung des Agenten)?
 - [ ] **Unrelated Files sauber:** Wurden nur Dateien geändert, die wirklich zur Aufgabe gehören?
+
+---
+
+## 6. Harness vs. Agent & Token-Effizienz (2 Faustregeln)
+
+- **Modellwahl & Permissions steuert das Harness, nicht der Prompt:** Ein Agent kann sein eigenes Hauptmodell in einer laufenden Session nicht selbst umschalten — wähle das passende Modell direkt im Harness.
+- **Subagents gezielt einsetzen:** Subagents lohnen sich für breite Codebase-Recherche, parallele Reviews oder lange Log-Analysen. Für kleine Änderungen in bereits gelesenen Dateien ist direktes Editieren schneller und token-sparsamer.
